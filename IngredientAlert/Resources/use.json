@@ -1,0 +1,140 @@
+[
+    {
+        "group":"makeup",
+        "useAreas": [
+            { "lips" : [
+                "Lipstick",
+                "Lip Gloss",
+                "Lip Plumper",
+                "Lip Balm",
+                "Chapstick",
+                "Lip Oil",
+                "Lip liner",
+                "Lip Stain",
+                "Liquid Lip Stick",
+            "Lip and Cheek Stain"]
+            },
+            { "Cheeks": [
+                "Cream Blush",
+                "Liquid Blush",
+                "Powder Blush",
+                "Jelly Blush",
+                "Liquid Bronzer",
+                "Cream Bronzer",
+                "Powder Bronzer",
+                "Cheek Palettes",
+                "Cream Highlighter",
+                "Liquid Highlighter",
+                "Powder Highlighter",
+                "Cream Contour",
+                "Liquid Contour",
+                "Powder Contour"
+            ]
+            },
+            {"Eyes" : [
+                "Cream Eyeshadow",
+                "Liquid Eyeshadow",
+                "Mascara",
+                "EyeLiner Pencil",
+                "EyeLiner Pen",
+                "Liquid Eyeliner"
+            ]
+            }
+            },
+            
+            {"group":"skincare",
+                "UseAreas": [
+                    {
+                        "face" : [
+                            "Serum",
+                            "Brightener",
+                            "Mask",
+                            "Chemical Peel",
+                            "Moisturizer",
+                            "Lotion",
+                            "Cream",
+                            "Anti-Aging",
+                            "Exfoliator"
+                        ]
+                    },
+                    {
+                        "body" : [
+                            "Lotion",
+                            "Oil",
+                            "Moisturizer",
+                            "Serum",
+                            "Mask",
+                            "Exfoliator",
+                            "balm",
+                        ]
+                    },
+                    {
+                        "feet" : [
+                            "Lotion",
+                            "Oil",
+                            "Moisturizer",
+                            "Serum",
+                            "Mask",
+                            "Exfoliator"
+                            "Balm"]
+                    },
+                    {
+                        "hands" : []
+                    },
+                ]
+            },
+            
+            {"group":"hair",
+                "UseAreas": [
+                    {
+                        "face" : []
+                    },
+                    {
+                        "body" : []
+                    },
+                    {
+                        "head" : []
+                    },
+                ]
+            },
+            
+            {"group":"fragrance",
+                "UseAreas": [
+                    {
+                        "face" : []
+                    },
+                    {
+                        "body" : []
+                    },
+                    {
+                        "head" : []
+                    },
+                ]
+            },
+            
+            
+            {"group":"bath & Shower",
+                "UseAreas": [
+                    {
+                        "face" : []
+                    },
+                    
+                    {
+                        "body" : []
+                    },
+                    
+                    {
+                        "head" : []
+                    },
+                    
+                    {
+                        "feet" : []
+                    },
+                    
+                    {
+                        "hands" : []
+                    },
+                ]
+            },
+        ]
+        

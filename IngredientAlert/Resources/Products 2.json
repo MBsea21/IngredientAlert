@@ -1,0 +1,15 @@
+[
+    {
+        "id":1
+        "name":"acne foaming cream cleanser",
+        "brand":"CeraVe",
+        "ingredients":["Benzoyl Peroxide 4.0%", "Water", "Glycerin", "Propylene Glycol","Cocamidopropyl Hydroxysultaine", "Sodium C14-16 Olefin Sulfonate", "Xanthan Gum", "Potassium Hydroxide", "Ceramide NP", "Ceramide AP", "Ceramide EOP", "Carbomer","Niacinamide", "Glycolic Acid", "Sodium Chloride","Sodium Citrate", "Sodium Hyaluronate", "Sodium Lauroyl Lactylate", "Sodium Hydroxide, Cholesterol", "Phenoxyethanol", "Propanediol", "Citric Acid", "Tetrasodium EDTA", "Diethylhexyl Sodium Sulfosuccinate", "Phytosphingosine", "Ethylhexylglycerin", "Benzoic Acid"],
+        "isFlagged":true,
+        "use":"Face Cleanser",
+        "useArea": "Face",
+        "useGroup": "Skincare",
+        "imageName": "ceraVe.AcneFoamingCreamCleanser",
+        "productLink":"https://www.bing.com/shop/productpage?q=Cerave+Cream+Acne+Foaming+Cleanser+%7c+Acne+Treatment+Face+Wash+With+4%25+Benzoyl+Peroxide+Hyaluronic+Acid+And+Niacinamide+%7c+To+Foam+Formula+%7c+5+Oz+5Oz&filters=scenario%3a%2217%22+gType%3a%2212%22+gId%3a%22127829533671%22+gGlobalOfferIds%3a%22127829533671%22+NonSponsoredOffer%3a%22True%22&productpage=true&pdppageoverlay=true&bgscenario=l2&originQuery=cerave+acne+foaming+cream+cleanser+&overlayOfferIds=127829533671%2c97865550588%2c67031441110%2c215818191217%2c94776337039%2c178285717837%2c238825343666%2c167782094285%2c197187191034%2c172944976517%2c151658610033%2c227507280124&overlayId=127829533671&FORM=SSAPC1",
+        "uploaderID": 0
+    }
+]

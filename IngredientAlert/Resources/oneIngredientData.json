@@ -1,0 +1,115 @@
+[
+    {
+        "id":1,
+        "inputName":"Citral",
+        "commonName":"Citral",
+        "isCommonName":true,
+        "commonNameId":1,
+        "isFlagged":true,
+        "sourceUrl":"https://www.fda.gov/cosmetics/cosmetic-ingredients/allergens-cosmetics",
+        "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/638011",
+        "otherNames":"citraline, citrus"
+    },
+    {
+        "id": 2,
+        "inputName":"Citraline",
+        "commonName":"Citral",
+        "isCommonName":false,
+        "commonNameId":1,
+        "isFlagged":true,
+        "sourceUrl":"https://www.fda.gov/cosmetics/cosmetic-ingredients/allergens-cosmetics",
+        "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/638011",
+        "otherNames":"citraline, citrus, citral"
+    },
+    {
+       "id": 3,
+       "inputName":"zirconium (iv) oxide",
+       "commonName":"zirconium (iv) oxide",
+       "isCommonName":true,
+       "commonNameId":3,
+       "isFlagged":true,
+       "sourceUrl":"https://pubmed.ncbi.nlm.nih.gov/8977338/",
+       "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/6454885",
+       "otherNames":""
+       
+   },
+    {
+       "id": 4,
+       "inputName" : "Caprylhydroxyamic Acid",
+       "commonName" : "Caprylhydroxyamic Acid",
+       "isCommonName" : true,
+       "commonNameId": 4,
+       "isFlagged" : true,
+       "sourceUrl" :"https://pubmed.ncbi.nlm.nih.gov/28421670/",
+       "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/23846",
+       "otherNames":""
+       },
+    
+    {
+       "id": 5,
+       "inputName" : "Quaternium-15",
+       "commonName" : "Quaternium-15",
+       "isCommonName" : true,
+       "commonNameId": 5,
+       "isFlagged" : true,
+       "sourceUrl" :"https://www.fda.gov/cosmetics/cosmetic-ingredients/allergens-cosmetics",
+       "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/6433396",
+       "otherNames":""
+   },
+    {
+       "id": 6,
+       "inputName" :  "Quaternium-15 (Dowicil 200; N-(3-chloroallyl) hexaminium chloride)",
+       "commonName" : "Quaternium-15",
+       "isCommonName" : false,
+       "commonNameId": 5,
+       "isFlagged" : true,
+       "sourceUrl" :"https://www.fda.gov/cosmetics/cosmetic-ingredients/allergens-cosmetics",
+       "pubChemUrl":"https://pubchem.ncbi.nlm.nih.gov/compound/6433396",
+       "otherNames":""
+   },
+    {
+       "id": 7,
+       "inputName" : "Coconut Oil",
+       "commonName" : "Coconut Oil",
+       "isCommonName" : true,
+       "commonNameId": 7,
+       "isFlagged" : false,
+       "sourceUrl" :"",
+       "pubChemUrl":"",
+       "otherNames":""
+   },
+    {
+       "id": 8,
+       "inputName" : "Benzoyl Peroxide",
+       "commonName" : "Benzoyl Peroxide",
+       "isCommonName" : true,
+       "commonNameId": 8,
+       "isFlagged" : true,
+       "sourceUrl" :"",
+       "pubChemUrl":"",
+       "otherNames":""
+   },
+    {
+       "id": 9,
+       "inputName" : "Benzoyl Peroxide",
+       "commonName" : "Benzoyl Peroxide 4.0%",
+       "isCommonName" : false,
+       "commonNameId": 8,
+       "isFlagged" : true,
+       "sourceUrl" :"",
+       "pubChemUrl":"",
+       "otherNames":""
+   },
+    {
+       "id": 10,
+       "inputName" : "Water",
+       "commonName" : "Water",
+       "isCommonName" : true,
+       "commonNameId": 10,
+       "isFlagged" : false,
+       "sourceUrl" :"",
+       "pubChemUrl":"",
+       "otherNames":""
+   },
+]
+
