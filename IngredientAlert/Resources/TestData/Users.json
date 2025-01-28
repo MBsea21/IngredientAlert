@@ -1,0 +1,32 @@
+[
+    {
+        "id" : 1,
+        "username" : "JoeFresh",
+        "password" : "Smoogless91#",
+        "name" : "Joe",
+        "email": "joe@gmail.com",
+        "isAdmin": false,
+        "personalFlaggedList" : [1,2],
+        "userAllergenIds" : [1]
+    },
+    {
+        "id" : 2,
+        "username" : "JennySmaold",
+        "password" : "Testing!1",
+        "name" : "Jenny",
+        "email": "jenny@gmail.com",
+        "isAdmin": true,
+        "personalFlaggedList" : [3],
+        "userAllergenIds" : [0]
+    },
+    {
+        "id" : 3,
+        "username" : "Floofda",
+        "password" : "grindolwald1!",
+        "name" : "Jpup",
+        "email": "dog@gmail.com",
+        "isAdmin": false,
+        "personalFlaggedList" : [9],
+        "userAllergenIds" : [0]
+    }
+]

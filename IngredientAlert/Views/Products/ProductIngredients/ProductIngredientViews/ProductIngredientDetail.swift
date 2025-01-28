@@ -2,12 +2,14 @@
 //  IngredientDetail.swift
 //  IngredientAlert
 //
-//  Created by Madeline  Bennett on 1/15/25.
+//  Created by Madeline Bennett on 1/22/25.
 //
+
+
 import Foundation
 import SwiftUI
 
-struct IngredientDetail: View {
+struct ProductIngredientDetail: View {
     @Environment(ModelData.self) var modelData
     var ingredient: Ingredient
     
@@ -36,26 +38,15 @@ struct IngredientDetail: View {
                 if ingredient.isFlagged {
                     VStack{
                         Section{
-                            if modelData.profile.personalFlaggedList.contains(ingredient.id) || modelData.profile.personalFlaggedList.contains(ingredient.commonNameId) {
-                                Text("This ingredient is a user flagged ingredient!")
-                            }
-                        } .font(.callout)
-                            .fontWeight(.medium)
-                            .foregroundColor(Color.red)
-                            .padding(.all, 3.0)
-                            .padding(.bottom)
-                            .padding(.top)
-                        
-                        Section{
                             Text("This ingredient has evidence of triggering a contact dermatitis reaciton.")
-
-                        }   .font(.callout)
-                            .fontWeight(.medium)
-                            .foregroundColor(Color.red)
-                            .padding(.all, 3.0)
-                            .padding(.bottom)
-                            .padding(.top)
+                                .font(.callout)
+                                .fontWeight(.medium)
+                                .foregroundColor(Color.red)
+                                .padding(.all, 3.0)
+                        }
                         
+                        .padding(.bottom)
+                        .padding(.top)
                         if ingredient.sourceUrl != "" {
                             Section {
                                 Text("Reaction Evidence")
@@ -99,6 +90,6 @@ struct IngredientDetail: View {
 
 #Preview {
     let modelData = ModelData()
-    return IngredientDetail(ingredient: modelData.ingredients[7])
+    return IngredientDetail(ingredient: modelData.ingredients[0])
         .environment(modelData)
 }

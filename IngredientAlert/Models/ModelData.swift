@@ -33,16 +33,14 @@
 //    
 //    }
 //}
-
-
-
 import Foundation
 
 @Observable
 class ModelData {
     var ingredients: [Ingredient] = load("oneIngredientData.json")
     var products: [Product] = load("Products.json")
-    
+    var allergens: [Allergen] = load("Allergens.json")
+    var profile = User.default
 }
 
 

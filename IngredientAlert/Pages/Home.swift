@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct Home: View {
-//    @Environment(ModelData.self) var modelData
+    //    @Environment(ModelData.self) var modelData
     
     var body: some View {
         Text("This is the Home page")
     }
 }
-
 #Preview {
     Home()
 }

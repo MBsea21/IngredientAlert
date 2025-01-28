@@ -18,13 +18,15 @@ enum Page : String, CaseIterable { // 1
 
 struct TopNavMenu: View {
     @Environment(ModelData.self) var modelData
-    @State var selectedPage=Page.Home
+    @State var selectedPage = Page.Home
+    
     
     var body: some View {
         Section{
             HStack{
                 Text("IngredientAlert")
                     .padding()
+                    .foregroundColor(Color.tNav)
                 
                 Spacer()
 
@@ -35,6 +37,10 @@ struct TopNavMenu: View {
                     .padding()
                 }
             }
+            .background {
+                Color.bTeal.opacity(1.0)
+                .ignoresSafeArea()
+            }
             Spacer()
         }
         Section {
@@ -42,11 +48,11 @@ struct TopNavMenu: View {
                 Home()
             }
             else if selectedPage.rawValue == "Ingredients" {
-                IngredientList()
+                Ingredients()
                     .environment(ModelData())
-                    }
-            else if selectedPage.rawValue == "Account" {
-                Account()
+            }
+            else if selectedPage.rawValue == "Account" { Account()
+                        .environment(ModelData())
             }
             else if selectedPage.rawValue == "Products" {
                 Products()

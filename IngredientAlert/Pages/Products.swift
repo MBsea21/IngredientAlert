@@ -11,7 +11,6 @@ struct Products: View {
     @Environment(ModelData.self) var modelData
     
     var body: some View {
-        Text("This is the Products page")
         ProductList()
             .environment(ModelData())
     }

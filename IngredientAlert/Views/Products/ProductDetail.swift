@@ -12,27 +12,61 @@ import SwiftData
 struct ProductDetail: View {
     @Environment(ModelData.self) var modelData
     var product: Product
-    
     var productIndex: Int{
         modelData.products.firstIndex(where: {$0.id == product.id })!
     }
     
-    
+
     var body: some View {
-//        @Bindable var modelData = modelData
-        Text(product.brand)
-        
-        Text(product.name)
+        Divider()
+        @Bindable var modelData = modelData
+        @State  var showProductIngredientDetails:Bool = false
+        HStack{
+            Section{
+                ProductImage(image: product.image)
+            }
+            VStack{
+                Text(product.name)
+                    .font(.title2)
+                    .padding(.bottom)
+                    .fixedSize(horizontal: false, vertical: false)
+                    .frame(width:200)
+                    
+                Text(product.brand)
+                    .font(.subheadline)
+                    
+                    
+            }.multilineTextAlignment(.center)
+        }
         
         if product.isFlagged {
             Text("This product has been flagged for containing skin irritating ingredients!")
-                .padding()
+                .padding(.bottom)
                 .foregroundColor(.red)
         }
-        ProductImage(image: product.image)
+        Divider()
+        Section {
+            ProductUse(product: product)
+                .environment(modelData)
+            
+            Divider()
+            Section {
+                ProductIngredientsList(product: product)
+                    .environment(modelData)
+            }
+            Divider()
+        }
+        Spacer()
     }
     
+    
+    
 }
+    
+
+
+
+
 
 
     

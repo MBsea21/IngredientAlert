@@ -13,12 +13,9 @@ struct ProductImage: View {
         image
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: 300)
-            .clipShape(Circle())
-            .overlay{
-                Circle().stroke(.white, lineWidth:4)
-            }
-            .shadow(radius: 7)
+            .frame(width: 100, height: 150)
+            .scaledToFit()
+            .cornerRadius(15)
     }
 }
 

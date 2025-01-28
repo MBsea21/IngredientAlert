@@ -12,21 +12,18 @@ struct Product: Hashable, Codable, Identifiable {
     var id: Int
     var name: String
     var brand: String
-//    var productIngredients: [String]
-//    var ingredients: String
     var isFlagged: Bool
-//    var use: String
-//    var useArea: String
-//    var useGroup: String
-//    var productLink: String
-//    var uploaderId: Int
-//    var imageName: String
+    var useTitle: String
+    var useArea: String
+    var useGroup: String
+    var uploaderId: Int
 
     private var imageName: String
     var image: Image{
         Image(imageName)
     }
-
-
+    var productIngredientsId: [Int]
 }
 //}
+
+

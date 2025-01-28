@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct Account: View {
-//    @Environment(ModelData.self) var modelData
+    @Environment(ModelData.self) var modelData
+    
     var body: some View {
-        Text("This is the account page")
+        AccountInfo()
+            .environment(ModelData())
     }
 }
 
 #Preview {
     Account()
+        .environment(ModelData())
 }
