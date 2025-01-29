@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct ProductIngredientDetail: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
     
     var ingredientIndex: Int{
@@ -19,7 +19,7 @@ struct ProductIngredientDetail: View {
     
 
     var body: some View {
-        @Bindable var modelData = modelData
+        @ObservedObject var modelData = modelData
         
         ScrollView{
             VStack {
@@ -91,5 +91,5 @@ struct ProductIngredientDetail: View {
 #Preview {
     let modelData = ModelData()
     return IngredientDetail(ingredient: modelData.ingredients[0])
-        .environment(modelData)
+        .environmentObject(modelData)
 }

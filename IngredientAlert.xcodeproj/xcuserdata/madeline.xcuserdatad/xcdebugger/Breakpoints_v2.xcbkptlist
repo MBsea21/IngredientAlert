@@ -7,33 +7,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E6215CB4-EA05-4CF2-BD23-7FA172CCC137"
+            uuid = "D97FE584-4696-4740-921E-61CAE2A27894"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IngredientAlert/Models/ModelData.swift"
+            filePath = "IngredientAlert/Models/ViewModels/AuthViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "ModelData"
-            landmarkType = "3">
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "fetchUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D97FE584-4696-4740-921E-61CAE2A27894 - 87b6483d8facaa8f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for IngredientAlert.AuthViewModel.fetchUser() async -&gt; ()"
+                  moduleName = "IngredientAlert.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/madeline/Desktop/ada%20desktop/Capstone/IngredientAlert/IngredientAlert/Models/ViewModels/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+               <Location
+                  uuid = "D97FE584-4696-4740-921E-61CAE2A27894 - 889e857832ac778c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for IngredientAlert.AuthViewModel.fetchUser() async -&gt; ()"
+                  moduleName = "IngredientAlert.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/madeline/Desktop/ada%20desktop/Capstone/IngredientAlert/IngredientAlert/Models/ViewModels/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "26AF0CE9-DB57-4E86-8915-71D984B51BB8"
+            uuid = "7FDF7098-A37B-4977-8925-D39A54DB9C9C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IngredientAlert/IngredientAlertApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D2F6839A-EB85-4954-8A8E-F63676588287"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IngredientAlert/Models/ModelData.swift"
+            filePath = "IngredientAlert/Models/ViewModels/AuthViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "load(_:)"
-            landmarkType = "9">
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "fetchUser()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

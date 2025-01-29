@@ -17,7 +17,7 @@ enum Page : String, CaseIterable { // 1
 }
 
 struct TopNavMenu: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     @State var selectedPage = Page.Home
     
     
@@ -49,19 +49,19 @@ struct TopNavMenu: View {
             }
             else if selectedPage.rawValue == "Ingredients" {
                 Ingredients()
-                    .environment(ModelData())
+                    .environmentObject(ModelData())
             }
             else if selectedPage.rawValue == "Account" { Account()
-                        .environment(ModelData())
+                        .environmentObject(ModelData())
             }
             else if selectedPage.rawValue == "Products" {
                 Products()
-                    .environment(ModelData())
+                    .environmentObject(ModelData())
             }
-            
-            else if selectedPage.rawValue == "LogIn" {
-                LogIn()
-            }
+//            
+//            else if selectedPage.rawValue == "LogIn" {
+//                LogIn()
+//            }
             else if selectedPage.rawValue == "Help" {
                 Help()
             }
@@ -71,5 +71,5 @@ struct TopNavMenu: View {
 
 #Preview{
     TopNavMenu()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

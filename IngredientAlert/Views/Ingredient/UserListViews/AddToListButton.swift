@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AddIngredientToListButton: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
     
     var ingredientIndex: Int{
@@ -17,7 +17,7 @@ struct AddIngredientToListButton: View {
     }
 
     var body: some View {
-        @Bindable var modelData = modelData
+        @ObservedObject var modelData = modelData
 
         DisclosureGroup("Add to personal list") {
                 Text("pick list here")
@@ -30,5 +30,5 @@ struct AddIngredientToListButton: View {
 #Preview {
     let modelData = ModelData()
     return AddIngredientToListButton(ingredient: modelData.ingredients[0])
-        .environment(modelData)
+        .environmentObject(modelData)
 }

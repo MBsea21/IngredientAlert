@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 
 struct IngredientDetail: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
     
     var ingredientIndex: Int{
@@ -17,7 +17,7 @@ struct IngredientDetail: View {
     
 
     var body: some View {
-        @Bindable var modelData = modelData
+        @ObservedObject var modelData = modelData
         
         ScrollView{
             VStack {
@@ -36,9 +36,9 @@ struct IngredientDetail: View {
                 if ingredient.isFlagged {
                     VStack{
                         Section{
-                            if modelData.profile.personalFlaggedList.contains(ingredient.id) || modelData.profile.personalFlaggedList.contains(ingredient.commonNameId) {
-                                Text("This ingredient is a user flagged ingredient!")
-                            }
+//                            if modelData.profile.personalFlaggedList.contains(ingredient) {
+//                                Text("This ingredient is a user flagged ingredient!")
+//                            }
                         } .font(.callout)
                             .fontWeight(.medium)
                             .foregroundColor(Color.red)
@@ -100,5 +100,5 @@ struct IngredientDetail: View {
 #Preview {
     let modelData = ModelData()
     return IngredientDetail(ingredient: modelData.ingredients[7])
-        .environment(modelData)
+        .environmentObject(modelData)
 }

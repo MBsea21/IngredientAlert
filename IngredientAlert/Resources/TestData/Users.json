@@ -6,8 +6,6 @@
         "name" : "Joe",
         "email": "joe@gmail.com",
         "isAdmin": false,
-        "personalFlaggedList" : [1,2],
-        "userAllergenIds" : [1]
     },
     {
         "id" : 2,
@@ -16,8 +14,6 @@
         "name" : "Jenny",
         "email": "jenny@gmail.com",
         "isAdmin": true,
-        "personalFlaggedList" : [3],
-        "userAllergenIds" : [0]
     },
     {
         "id" : 3,
@@ -26,7 +22,5 @@
         "name" : "Jpup",
         "email": "dog@gmail.com",
         "isAdmin": false,
-        "personalFlaggedList" : [9],
-        "userAllergenIds" : [0]
     }
 ]

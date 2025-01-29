@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct ProductDetail: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var product: Product
     var productIndex: Int{
         modelData.products.firstIndex(where: {$0.id == product.id })!
@@ -19,7 +19,7 @@ struct ProductDetail: View {
 
     var body: some View {
         Divider()
-        @Bindable var modelData = modelData
+        @ObservedObject var modelData = modelData
         @State  var showProductIngredientDetails:Bool = false
         HStack{
             Section{
@@ -47,12 +47,12 @@ struct ProductDetail: View {
         Divider()
         Section {
             ProductUse(product: product)
-                .environment(modelData)
+                .environmentObject(modelData)
             
             Divider()
             Section {
                 ProductIngredientsList(product: product)
-                    .environment(modelData)
+                    .environmentObject(modelData)
             }
             Divider()
         }
@@ -73,5 +73,5 @@ struct ProductDetail: View {
 #Preview {
     let modelData = ModelData()
     return ProductDetail(product: modelData.products[0])
-        .environment(modelData)
+        .environmentObject(modelData)
 }

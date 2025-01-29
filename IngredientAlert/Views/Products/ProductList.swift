@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct ProductList: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     @State private var showFlaggedOnly = false
     
     
@@ -51,5 +51,5 @@ struct ProductList: View {
 
 #Preview {
     ProductList()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

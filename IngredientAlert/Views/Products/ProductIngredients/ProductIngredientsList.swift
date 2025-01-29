@@ -9,7 +9,7 @@ import SwiftUI
 import Foundation
 
 struct ProductIngredientsList: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     @State var showIngredientDetails : Bool = false
     
     var product : Product
@@ -19,15 +19,19 @@ struct ProductIngredientsList: View {
             return product.productIngredientsId.contains(ingredient.id)}
     }
     
+//    var remainingIngredients: [Ingredient] {
+//        productIngredients.filter { (ingredient) -> Bool in }
+//    }
+    
     var flaggedIngredients: [Ingredient] {
         productIngredients.filter { (ingredient) -> Bool in
             return ingredient.isFlagged == true}
     }
     
-    var userFlaggedIngredients: [Ingredient] {
-        productIngredients.filter{ (ingredient) -> Bool in
-            return modelData.profile.personalFlaggedList.contains(ingredient.id)}
-    }
+    //    var userFlaggedIngredients: [Ingredient] {
+    //        productIngredients.filter{ (ingredient) -> Bool in
+    //            return modelData.profile.personalFlaggedList.contains(ingredient.id)}
+    //    }
     var unflaggedIngredients: [Ingredient] {
         productIngredients.filter { (ingredient) -> Bool in
             return ingredient.isFlagged == false}
@@ -36,40 +40,40 @@ struct ProductIngredientsList: View {
     
     
     var body: some View {
-        Section{
-        HStack {
-            Text("Ingredients")
-                .font(.title3)
-                .scaledToFill()
-                .padding()
-                .accessibilityLabel("Product Ingredients Menu")
-            
-            Spacer()
-            VStack{
-                Section{
-                    Text("Details")
-                        .scaledToFill()
-                        .frame(width : 60, height:15)
-                    
-                    Toggle("Show Details", isOn:$showIngredientDetails)
-                        .frame(width: 100)
-                        .font(.callout)
-                        .labelsHidden()
+        Section {
+            HStack {
+                Text("Ingredients")
+                    .font(.title3)
+                    .scaledToFill()
+                    .padding()
+                    .accessibilityLabel("Product Ingredients Menu")
+                
+                Spacer()
+                VStack{
+                    Section{
+                        Text("Details")
+                            .scaledToFill()
+                            .frame(width : 60, height:15)
+                        
+                        Toggle("Show Details", isOn:$showIngredientDetails)
+                            .frame(width: 100)
+                            .font(.callout)
+                            .labelsHidden()
+                    }
                 }
             }
-        }
-
-        
+            
             if showIngredientDetails {
-                IngredientClickableList(flaggedIngredients: flaggedIngredients, userFlaggedIngredients: userFlaggedIngredients, unflaggedIngredients: unflaggedIngredients)
+                IngredientClickableList(flaggedIngredients: flaggedIngredients, /*userFlaggedIngredients: userFlaggedIngredients,*/ unflaggedIngredients: unflaggedIngredients)
                 
             } else {
-                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients,  userFlaggedIngredients: userFlaggedIngredients, unflaggedIngredients: unflaggedIngredients)
+//                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients,  /*userFlaggedIngredients: userFlaggedIngredients,*/ unflaggedIngredients: unflaggedIngredients)
             }
         }
     }
-        
-    }
+    
+    
+}
                 
         
     
@@ -78,6 +82,6 @@ struct ProductIngredientsList: View {
 #Preview {
     let modelData = ModelData()
     return ProductIngredientsList(product: modelData.products[0])
-        .environment(modelData)
+        .environmentObject(modelData)
 }
 

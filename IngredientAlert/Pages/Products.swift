@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct Products: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
         ProductList()
-            .environment(ModelData())
+            .environmentObject(modelData)
     }
 }
 
 #Preview {
     Products()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

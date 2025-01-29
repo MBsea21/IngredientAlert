@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ProductUse: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var product: Product
     
     var body: some View {
@@ -38,5 +38,5 @@ struct ProductUse: View {
 #Preview {
     let modelData = ModelData()
     ProductUse(product: modelData.products[0])
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

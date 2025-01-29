@@ -9,36 +9,34 @@ import SwiftUI
 import Foundation
 
 struct AccountInfo: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
         Section{
-            Text("Welcome back \(modelData.profile.name)!")
+            Text("Welcome back \(modelData.profile.fullname)!")
                 .font(.title)
         }
     
             
         Section{
-            DisclosureGroup("Username") {
-                Text(modelData.profile.username)
-            }
             DisclosureGroup("Email") {
                 Text( modelData.profile.email)
             }
-            DisclosureGroup("Allergens") {
-                if modelData.profile.userAllergensIds == [0] {
-                    Text("No Allergens Listed")
-                } else {
-                    UserAllergenList(allergenIds: modelData.profile.userAllergensIds)
-                        .environment(ModelData())
-                }
-            }
+//            DisclosureGroup("Allergens") {
+//                if modelData.profile.userAllergens == [] {
+//                    Text("No Allergens Listed")
+//                } else {
+////                    UserAllergenList(allergenIds: modelData.profile.userAllergensIds)
+////                        .environmentObject(ModelData())
+//                }
+            
             DisclosureGroup("Personal Flagged Ingredients") {
-                if modelData.profile.personalFlaggedList == [0] {
-                    Text("No ingredients added yet")
-                } else {
-                    UserFlaggedList(userFlaggedIngredients: modelData.profile.personalFlaggedList)
-                }
+//                if modelData.profile.personalFlaggedList == [] {
+//                    Text("No ingredients added yet")
+//                } else {
+//                    Text("Flagged Ingredients")
+////                    UserFlaggedList(userFlaggedIngredients: modelData.profile.personalFlaggedList)
+//                }
             }
             
         }.padding(30)
@@ -49,5 +47,5 @@ struct AccountInfo: View {
 
 #Preview {
     Account()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

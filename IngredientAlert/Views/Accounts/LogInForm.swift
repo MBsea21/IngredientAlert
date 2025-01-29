@@ -54,7 +54,7 @@
 //    
 //    var body: some View {
 //        TopNavMenu()
-//            .environment(ModelData())
+//            .environmentObject(ModelData())
 //        Form {
 //            HStack{
 //                Text("Username")
@@ -81,5 +81,5 @@
 //
 //#Preview {
 //    LogInForm()
-//        .environment(ModelData())
+//        .environmentObject(ModelData())
 //}

@@ -11,11 +11,11 @@ struct ContentView: View {
     
     var body: some View {
         TopNavMenu()
-            .environment(ModelData())
+            .environmentObject(ModelData())
     }
 }
 
 #Preview {
     ContentView()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

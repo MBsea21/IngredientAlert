@@ -10,7 +10,7 @@ import Foundation
 
 struct IngredientClickableList: View {
     var flaggedIngredients: [Ingredient]
-    var userFlaggedIngredients: [Ingredient]
+//    var userFlaggedIngredients: [Ingredient]
     var unflaggedIngredients: [Ingredient]
     
     var body: some View {
@@ -21,20 +21,20 @@ struct IngredientClickableList: View {
             ScrollView(.horizontal){
                 HStack(spacing: 20){
                     Spacer()
-                    ForEach(userFlaggedIngredients) { ingredient in
-                        NavigationLink {
-                            ProductIngredientDetail(ingredient: ingredient)
-                        } label: {
-                            ProductIngredientRow(ingredient: ingredient)
-                                .padding(10)
-                                .border(.gray)
-                                .cornerRadius(3)
-                                .shadow(radius: 3)
-                                .background {
-                                    Color.bWhite2.opacity(0.15)
-                                }
-                        }
-                    }
+//                    ForEach(userFlaggedIngredients) { ingredient in
+//                        NavigationLink {
+//                            ProductIngredientDetail(ingredient: ingredient)
+//                        } label: {
+//                            ProductIngredientRow(ingredient: ingredient)
+//                                .padding(10)
+//                                .border(.gray)
+//                                .cornerRadius(3)
+//                                .shadow(radius: 3)
+//                                .background {
+//                                    Color.bWhite2.opacity(0.15)
+//                                }
+//                        }
+//                    }
                     Spacer()
                 }.fixedSize(horizontal: true, vertical: true)
                     .padding(.bottom)
@@ -103,6 +103,6 @@ struct IngredientClickableList: View {
     let modelData = ModelData()
     let flaggedIngredients = [modelData.ingredients[0]]
     let unflaggedIngredients = [modelData.ingredients[9]]
-    let userflaggedIngredients = [modelData.ingredients[8]]
-    IngredientClickableList(flaggedIngredients: flaggedIngredients, userFlaggedIngredients: userflaggedIngredients, unflaggedIngredients: unflaggedIngredients)
+//    let userflaggedIngredients = [modelData.ingredients[8]]
+    IngredientClickableList(flaggedIngredients: flaggedIngredients, /*userFlaggedIngredients: userflaggedIngredients,*/ unflaggedIngredients: unflaggedIngredients)
 }

@@ -11,7 +11,7 @@ import SwiftUI
 
 
 struct IngredientList: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     @State private var showCommonNameOnly = true
     @State private var showFlaggedOnly = false
     
@@ -53,5 +53,5 @@ struct IngredientList: View {
 
 #Preview {
     IngredientList()
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }

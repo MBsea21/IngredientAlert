@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct Help: View {
-//    @Environment(ModelData.self) var modelData
+//    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
         Text("This is the Help page")

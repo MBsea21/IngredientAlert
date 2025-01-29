@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Ingredients: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
         IngredientList()
-            .environment(ModelData())
+            .environmentObject(modelData)
     }
 }
 
