@@ -13,10 +13,17 @@ struct User: Hashable, Codable, Identifiable {
     var fullname: String
     var email: String
     var isAdmin: Bool?
-//    var personalFlaggedList : [Ingredient]
-//    var userAllergens: [Ingredient]
-
-        
+    //    var personalFlaggedList : [Ingredient]
+    //    var userAllergens: [Ingredient]
+    
+    var initials: String{
+        let formatter = PersonNameComponentsFormatter()
+        if let components = formatter.personNameComponents(from: fullname) {
+            formatter.style = .abbreviated
+            return formatter.string(from: components)
+        }
+        return ""
+    }
     static let `default` = User(id:NSUUID().uuidString , fullname: "Anonymous", email: "anonymous", isAdmin: false/*, personalFlaggedList: [], userAllergens: []*/)
 }
 

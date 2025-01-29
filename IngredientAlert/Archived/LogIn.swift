@@ -7,6 +7,17 @@
 //
 //import SwiftUI
 //
+//struct LogInPage: View {
+//    @environmentObject var modelData: ModelData
+//    
+//    var body: some View{
+//        
+//        LoginFormView()
+//            .enviromentObject(ModelData())
+//    }
+//}
+//import SwiftUI
+//
 //struct LogIn: View {
 //    @EnvironmentObject var modelData: ModelData
 //    @State private var email: String = ""

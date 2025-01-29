@@ -47,20 +47,17 @@ struct TopNavMenu: View {
             if selectedPage.rawValue == "Home" {
                 Home()
             }
-            else if selectedPage.rawValue == "Ingredients" {
-                Ingredients()
-                    .environmentObject(ModelData())
+//            else if selectedPage.rawValue == "Ingredients" {
+//                Ingredients()
+//                    .environmentObject(ModelData())
+//            }
+            else if selectedPage.rawValue == "Account" {
+                Account()
+                    .environmentObject(modelData)
             }
-            else if selectedPage.rawValue == "Account" { Account()
-                        .environmentObject(ModelData())
-            }
-            else if selectedPage.rawValue == "Products" {
-                Products()
-                    .environmentObject(ModelData())
-            }
-//            
-//            else if selectedPage.rawValue == "LogIn" {
-//                LogIn()
+//            else if selectedPage.rawValue == "Products" {
+//                Products()
+//                    .environmentObject(ModelData())
 //            }
             else if selectedPage.rawValue == "Help" {
                 Help()

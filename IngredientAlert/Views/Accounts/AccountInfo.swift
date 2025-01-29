@@ -12,40 +12,77 @@ struct AccountInfo: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        Section{
-            Text("Welcome back \(modelData.profile.fullname)!")
-                .font(.title)
+//        VStack{
+//            Text("account view")
+//            if let user =  modelData.authViewModel.currentUser {
+//                Text("user is open")
+//                Text(user.fullname)
+//                
+//                    .foregroundColor(.black)
+//            }
+//            Spacer()
+//        }
+//    }
+//}
+        if let user = modelData.authViewModel.currentUser {
+            ScrollView{
+                VStack(alignment:.leading, spacing: 24){
+                    Section{
+                        HStack{
+                            Text(user.initials)
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .frame(width: 72, height: 72)
+                                .background(Color(.bGrayGreen))
+                                .clipShape(Circle())
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(user.fullname)
+                                    .fontWeight(.semibold)
+                                    .padding(.top, 4)
+                                Text(user.email)
+                                    .font(.footnote)
+                                    .foregroundColor(.bGrayGreen)
+                            }
+                        }
+                    }
+                    Section("general") {
+                        HStack{
+                            SettingsRowView(imageName: "gear",
+                                            title: "version",
+                                            tintColor: Color(.bGrayGreen))
+                            Spacer()
+                            Text("1.0.0")
+                                .font(.subheadline)
+                                .foregroundColor(.bGrayGreen)
+                        }
+                    }
+                Section("Account"){
+                    Button {
+                        modelData.authViewModel.signOut()
+                    } label: {
+                        SettingsRowView(imageName:"arrow.left.circle.fill",
+                                        title:"Sign Out",
+                                        tintColor: Color(.red))
+                    }
+                }
+                        Button {
+                            modelData.authViewModel.deleteAccount()
+                        } label: {
+                            SettingsRowView(imageName:"xmark.circle.fill",
+                                            title:"Delete Account",
+                                            tintColor:Color(.red))
+                    }
+                }
+                .padding()
+            }
         }
-    
-            
-        Section{
-            DisclosureGroup("Email") {
-                Text( modelData.profile.email)
-            }
-//            DisclosureGroup("Allergens") {
-//                if modelData.profile.userAllergens == [] {
-//                    Text("No Allergens Listed")
-//                } else {
-////                    UserAllergenList(allergenIds: modelData.profile.userAllergensIds)
-////                        .environmentObject(ModelData())
-//                }
-            
-            DisclosureGroup("Personal Flagged Ingredients") {
-//                if modelData.profile.personalFlaggedList == [] {
-//                    Text("No ingredients added yet")
-//                } else {
-//                    Text("Flagged Ingredients")
-////                    UserFlaggedList(userFlaggedIngredients: modelData.profile.personalFlaggedList)
-//                }
-            }
-            
-        }.padding(30)
-                
-        Spacer()
+    }
+}
+struct AccountInfo_Previews: PreviewProvider {
+    static var previews: some View{
+        return AccountInfo()
+            .environmentObject(ModelData())
     }
 }
 
-#Preview {
-    Account()
-        .environmentObject(ModelData())
-}

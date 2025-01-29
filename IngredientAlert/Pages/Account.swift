@@ -11,8 +11,13 @@ struct Account: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        AccountInfo()
-            .environmentObject(modelData)
+        if modelData.authViewModel.userSession != nil {
+            AccountInfo()
+                .environmentObject(modelData)
+        } else {
+            LoginFormView()
+                .environmentObject(modelData)
+        }
     }
 }
 

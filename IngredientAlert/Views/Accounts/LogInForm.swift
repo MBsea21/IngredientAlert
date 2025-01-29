@@ -3,83 +3,99 @@
 //  IngredientAlert
 //
 //  Created by Madeline Bennett on 1/20/25.
-//
 
-//import SwiftUI
-//
-//
-//
-//struct LogInForm: View {
-//    @State private var inputUsername: String = ""
-//    @State private var inputPassword: String = ""
-//    @State private var logInSuccesful: Bool = false
-//    
-//    @FocusState private var usernameFieldIsFocused: Bool
-//    
-//    
-//    func checkUsername () -> Bool{
-//        if inputUsername == "test" {
-//            return true
-//        }
-//        else {
-//            return false
-//        }
-//    }
-//
-//    func checkPassword () -> Bool{
-//        if inputPassword == "test" {
-//            return true
-//        }
-//        else {
-//            return false
-//        }
-//    }
-//
-//    
-//    
-//    
-//    func handleLoginAttempt(){
-//        let passwordTrue = checkPassword()
-//        let usernameTrue = checkUsername()
-//        
-//        if passwordTrue == true && usernameTrue == true {
-//            logInSuccesful = true
-//        }
-//        else {
-//            logInSuccesful = false
-//        }
-//    }
-//    
-//    
-//    
-//    var body: some View {
-//        TopNavMenu()
-//            .environmentObject(ModelData())
-//        Form {
-//            HStack{
-//                Text("Username")
-//                TextField(text: $inputUsername, prompt: Text("Required")) {
-//                    Text("Username")
-//                }.autocapitalization(false)
-//            }
-//            HStack{
-//                Text("Password ")
-//                SecureField(text: $inputPassword, prompt: Text("Required")) {
-//                    Text("Password")
-//                }
-//            }
-//            Button(action: handleLoginAttempt) {
-//                Label("Sign In", systemImage: "arrow.up")
-//                
-//            }.buttonStyle(BorderedButtonStyle())
-//        }.textFieldStyle(.roundedBorder)
-//        if logInSuccesful == true {
-//            Text ("log in was succesfull!!")
-//        }
-//        }
-//}
-//
-//#Preview {
-//    LogInForm()
-//        .environmentObject(ModelData())
-//}
+
+import SwiftUI
+
+struct LoginFormView: View {
+    @State private var email = ""
+    @State private var password = ""
+    @EnvironmentObject var modelData: ModelData
+    
+    
+    var body: some View {
+        NavigationStack{
+            VStack{
+                
+                Image("logo")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width:120, height: 120)
+                    .padding(.vertical, 32)
+                //image
+                
+                //form fields
+                VStack(spacing: 24){
+                    InputView(text: $email,
+                              title: "Email Address",
+                              placeholder: "name@example.com")
+                        .autocorrectionDisabled(true)
+                        
+                    InputView(text:$password,
+                              title:"Password",
+                              placeholder: "Enter your password",
+                              isSecureField: true)
+                        .autocorrectionDisabled(true)
+                    
+                }
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                
+                // signin button
+                Button{
+                    Task{
+                        try await modelData.authViewModel.signIn(withEmail: email, password: password)
+                    }
+                    } label: {
+                    HStack {
+                        Text("SIGN IN")
+                            .fontWeight(.semibold)
+                        Image(systemName: "arrow.right")
+                    }
+                    .foregroundColor(.white)
+                    .frame(width:350, height: 48)
+                }
+                .background(Color(.systemBlue))
+                .disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.5)
+                .cornerRadius(10)
+                .padding(.top, 24)
+                
+                Spacer()
+                
+                NavigationLink {
+                    RegistrationView()
+                        .navigationBarBackButtonHidden(true)
+                } label: {
+                    HStack{
+                        Text("Dont have an account?")
+                        Text("Sign Up!")
+                            .fontWeight(.bold)
+                    }
+                    .font(.system(size: 14))
+                }
+            }
+            
+            
+                }
+                //sign up button
+            }
+        }
+
+// MARK: AuthenticationFormProtocol
+extension LoginFormView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count >= 8
+    }
+}
+
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginFormView()
+    }
+}
