@@ -11,11 +11,31 @@ struct Ingredients: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        IngredientList()
-            .environmentObject(modelData)
+        let currentUser = modelData.authViewModel.currentUser
+        if currentUser?.isAdmin == true {
+            VStack {
+                NavigationStack{
+                    
+                
+                NavigationLink {
+                    AddCommonIngredientForm()
+                        .environmentObject(modelData)
+                } label: {
+                    Label("Add Common Ingredient", systemImage:  "plus.diamond.fill")
+                    
+                }
+            }
+        }
+            
+        } else {
+                Text("Ingredients List")
+            
+            
+        }
     }
 }
 
 #Preview {
     Ingredients()
+        .environmentObject(ModelData())
 }

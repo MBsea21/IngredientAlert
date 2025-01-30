@@ -11,8 +11,9 @@ struct Products: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        ProductList()
-            .environmentObject(modelData)
+        Text("PRODUCTS PAGE")
+//        ProductList()
+//            .environmentObject(modelData)
     }
 }
 

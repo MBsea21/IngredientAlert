@@ -47,12 +47,12 @@ struct TopNavMenu: View {
             if selectedPage.rawValue == "Home" {
                 Home()
             }
-//            else if selectedPage.rawValue == "Ingredients" {
-//                Ingredients()
-//                    .environmentObject(ModelData())
-//            }
+            else if selectedPage.rawValue == "Ingredients" {
+                Ingredients()
+                    .environmentObject(modelData)
+            }
             else if selectedPage.rawValue == "Account" {
-                var loggedIn = modelData.authViewModel.userSession != nil
+                let loggedIn = modelData.authViewModel.userSession != nil
                 Account(isLoggedIn: loggedIn)
                     .environmentObject(modelData)
             }

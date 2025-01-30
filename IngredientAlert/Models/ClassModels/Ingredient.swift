@@ -6,16 +6,17 @@
 //
 import Foundation
 import SwiftUI
+import FirebaseFirestore
 
 struct Ingredient: Hashable, Codable, Identifiable {
-    var id: Int
+    @DocumentID var id: String?
     var inputName: String
     var commonName: String
     var isCommonName: Bool
-    var commonNameId: Int
+    var commonNameId: String?
     var isFlagged: Bool
     var sourceUrl: String
     var pubChemUrl: String
-    var otherNames: String
-    var allergenId: [Int]
+//    var otherNames: String
+//    var allergenId: [Int]
 }

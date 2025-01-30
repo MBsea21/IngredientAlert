@@ -38,17 +38,23 @@ import SwiftUI
 
 @MainActor
 class ModelData: ObservableObject{
-    @Published var ingredients: [Ingredient] = load("oneIngredientData.json")
+//    @Published var ingredients: [Ingredient] = load("oneIngredientData.json")
     @Published var products: [Product] = load("Products.json")
     @Published var allergens: [Allergen] = load("Allergens.json")
     @Published var profile: User = User.default
     @Published var authViewModel: AuthViewModel = createViewModel()
+    @Published var ingredientListViewModel: IngredientListViewModel = createIngredientListViewModel()
     }
 
 
 func createViewModel() -> AuthViewModel {
     let authViewModel = AuthViewModel()
         return authViewModel
+}
+
+func createIngredientListViewModel () -> IngredientListViewModel {
+    let ingredientListViewModel = IngredientListViewModel()
+    return ingredientListViewModel
 }
 
 func load<T: Decodable>(_ filename: String) -> T {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C163B5C02D49AE040010534A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C163B5BF2D49AE040010534A /* GoogleService-Info.plist */; };
 		C163B5C32D49AEE30010534A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5C22D49AEE30010534A /* FirebaseAuth */; };
 		C163B5C52D49AEE30010534A /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5C42D49AEE30010534A /* FirebaseAuthCombine-Community */; };
 		C163B5C72D49AEE30010534A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5C62D49AEE30010534A /* FirebaseCore */; };
@@ -17,10 +18,13 @@
 		C163B5D12D49AEE30010534A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5D02D49AEE30010534A /* FirebaseFunctions */; };
 		C163B5D32D49AEE30010534A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5D22D49AEE30010534A /* FirebaseStorage */; };
 		C163B5D52D49AEE30010534A /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C163B5D42D49AEE30010534A /* FirebaseStorageCombine-Community */; };
+		C163B5E42D4BF7E50010534A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C163B5E32D4BF7DD0010534A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		50A59E872D38A9D800A380F5 /* IngredientAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IngredientAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C163B5BF2D49AE040010534A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C163B5E32D4BF7DD0010534A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +59,8 @@
 		50A59E7E2D38A9D800A380F5 = {
 			isa = PBXGroup;
 			children = (
+				C163B5E32D4BF7DD0010534A /* .gitignore */,
+				C163B5BF2D49AE040010534A /* GoogleService-Info.plist */,
 				50A59E892D38A9D800A380F5 /* IngredientAlert */,
 				50A59E882D38A9D800A380F5 /* Products */,
 			);
@@ -145,6 +151,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C163B5E42D4BF7E50010534A /* .gitignore in Resources */,
+				C163B5C02D49AE040010534A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
