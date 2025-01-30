@@ -9,19 +9,20 @@ import SwiftUI
 
 struct Account: View {
     @EnvironmentObject var modelData: ModelData
+    @State var isLoggedIn: Bool
     
     var body: some View {
-        if modelData.authViewModel.userSession != nil {
-            AccountInfo()
+        if isLoggedIn == true {
+            AccountInfo(isLoggedIn: $isLoggedIn)
                 .environmentObject(modelData)
         } else {
-            LoginFormView()
+            LoginFormView(isLoggedIn: $isLoggedIn)
                 .environmentObject(modelData)
         }
     }
 }
 
-#Preview {
-    Account()
-        .environmentObject(ModelData())
-}
+//#Preview {
+//    Account()
+//        .environmentObject(ModelData())
+//}

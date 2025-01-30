@@ -11,13 +11,13 @@ struct LoginFormView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var modelData: ModelData
-    
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
         NavigationStack{
             VStack{
                 
-                Image("logo")
+                Image("iconLogoSquare")
                     .resizable()
                     .scaledToFill()
                     .frame(width:120, height: 120)
@@ -46,8 +46,11 @@ struct LoginFormView: View {
                 Button{
                     Task{
                         try await modelData.authViewModel.signIn(withEmail: email, password: password)
+                        if modelData.authViewModel.userSession != nil {
+                            isLoggedIn = true
+                        }
                     }
-                    } label: {
+                } label: {
                     HStack {
                         Text("SIGN IN")
                             .fontWeight(.semibold)
@@ -96,6 +99,6 @@ extension LoginFormView: AuthenticationFormProtocol {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginFormView()
+        LoginFormView(isLoggedIn: Binding.constant(false))
     }
 }

@@ -60,8 +60,10 @@ class AuthViewModel: ObservableObject {
             try Auth.auth().signOut() // signs user out on backend
             self.userSession = nil //wipes out user session and takes us back to login screen
             self.currentUser = nil // wipes out current user data model
+            print("signed out current user")
         } catch {
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+            
         }
     }
     
@@ -75,7 +77,7 @@ class AuthViewModel: ObservableObject {
                     print("ann error happened\(error)")
                     // An error happened.
                 } else {
-                                        
+                    
                     print("account deleted")
                     self.userSession = nil
                     self.currentUser = nil

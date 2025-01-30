@@ -9,21 +9,25 @@ import SwiftUI
 import Foundation
 
 struct AccountInfo: View {
+    //    @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var modelData: ModelData
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
-//        VStack{
-//            Text("account view")
-//            if let user =  modelData.authViewModel.currentUser {
-//                Text("user is open")
-//                Text(user.fullname)
-//                
-//                    .foregroundColor(.black)
-//            }
-//            Spacer()
-//        }
-//    }
-//}
+        //        VStack{
+        //            Text("account view")
+        //            if let user =  modelData.authViewModel.currentUser {
+        //                Text("user is open")
+        //                Text(user.fullname)
+        //
+        //                    .foregroundColor(.black)
+        //            }
+        //            Spacer()
+        
+        //        }
+        //    }
+        
+    
         if let user = modelData.authViewModel.currentUser {
             ScrollView{
                 VStack(alignment:.leading, spacing: 24){
@@ -57,31 +61,50 @@ struct AccountInfo: View {
                                 .foregroundColor(.bGrayGreen)
                         }
                     }
-                Section("Account"){
-                    Button {
-                        modelData.authViewModel.signOut()
-                    } label: {
-                        SettingsRowView(imageName:"arrow.left.circle.fill",
-                                        title:"Sign Out",
-                                        tintColor: Color(.red))
-                    }
-                }
+                    Section("Account"){
                         Button {
-                            modelData.authViewModel.deleteAccount()
+                            Task{
+                                modelData.authViewModel.signOut()
+                                if modelData.authViewModel.userSession == nil {
+                                    isLoggedIn = false
+                                }
+                            }
                         } label: {
-                            SettingsRowView(imageName:"xmark.circle.fill",
-                                            title:"Delete Account",
-                                            tintColor:Color(.red))
+                            SettingsRowView(imageName:"arrow.left.circle.fill",
+                                            title:"Sign Out",
+                                            tintColor: Color(.red))
+                        }
+                    }
+                    Button {
+                        Task {
+                            modelData.authViewModel.deleteAccount()
+                            
+                            if modelData.authViewModel.userSession == nil {
+                                isLoggedIn = false
+                            }
+                        }
+                        //                            authViewModel.deleteAccount()
+                        
+                    } label: {
+                        SettingsRowView(imageName:"xmark.circle.fill",
+                                        title:"Delete Account",
+                                        tintColor:Color(.red))
                     }
                 }
                 .padding()
             }
+        } else {
+            LoginFormView(isLoggedIn: Binding.constant(false))
         }
+  
     }
+    
 }
+
+
 struct AccountInfo_Previews: PreviewProvider {
     static var previews: some View{
-        return AccountInfo()
+        return AccountInfo(isLoggedIn: Binding.constant(true))
             .environmentObject(ModelData())
     }
 }

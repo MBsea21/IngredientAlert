@@ -20,7 +20,7 @@ struct RegistrationView: View {
         NavigationStack{
             VStack{
                 
-                Image("logo")
+                Image("iconLogoSquare")
                     .resizable()
                     .scaledToFill()
                     .frame(width:120, height: 120)

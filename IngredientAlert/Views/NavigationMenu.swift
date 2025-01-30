@@ -52,7 +52,8 @@ struct TopNavMenu: View {
 //                    .environmentObject(ModelData())
 //            }
             else if selectedPage.rawValue == "Account" {
-                Account()
+                var loggedIn = modelData.authViewModel.userSession != nil
+                Account(isLoggedIn: loggedIn)
                     .environmentObject(modelData)
             }
 //            else if selectedPage.rawValue == "Products" {
