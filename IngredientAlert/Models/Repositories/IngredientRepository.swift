@@ -18,7 +18,7 @@ class IngredientRepository: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     init () {
-        
+        self.get()
     }
     
     func get() {
@@ -38,7 +38,14 @@ class IngredientRepository: ObservableObject {
         do {
             let newCommonReference = store.collection(path).document()
             let newCommonIngredientId = newCommonReference.documentID
-            let newCommonIngredient = Ingredient(id: newCommonIngredientId,inputName: inputName, commonName: commonName, isCommonName: true, commonNameId: newCommonIngredientId, isFlagged: isFlagged, sourceUrl: sourceUrl, pubChemUrl: pubChemUrl)
+            let newCommonIngredient = Ingredient(id: newCommonIngredientId,
+                                                 inputName: inputName,
+                                                 commonName: commonName,
+                                                 isCommonName: true,
+                                                 commonNameId: newCommonIngredientId,
+                                                 isFlagged: isFlagged,
+                                                 sourceUrl: sourceUrl,
+                                                 pubChemUrl: pubChemUrl)
             do {
                 try store.collection(path).document(newCommonIngredientId).setData(from: newCommonIngredient)
             }
@@ -47,6 +54,26 @@ class IngredientRepository: ObservableObject {
             fatalError("DEBUG: unable to add Common Ingredient: \(error.localizedDescription)")
         }
     }
+    func addOtherName(inputName: String, commonName: String, isCommonName: Bool, commonNameId: String, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) {
+        do {
+            let newOtherNameRefrence = store.collection(path).document()
+            let newOtherNameIngredientId = newOtherNameRefrence.documentID
+            let newOtherNameIngredient = Ingredient(id: newOtherNameIngredientId,
+                                                    inputName: inputName,
+                                                    commonName: commonName,
+                                                    isCommonName: false,
+                                                    commonNameId: commonNameId,
+                                                    isFlagged: isFlagged,
+                                                    sourceUrl: sourceUrl,
+                                                    pubChemUrl: pubChemUrl)
+            do {
+                try store.collection(path).document(newOtherNameIngredientId).setData(from:newOtherNameIngredient)
+            } catch {
+                fatalError("DEBUG: unable to add other ingredient name \(inputName): \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func update(_ ingredient: Ingredient) {
         guard let ingredientId = ingredient.id else { return }
         do {

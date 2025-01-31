@@ -14,92 +14,85 @@ struct AddCommonIngredientForm: View {
     @State private var pubChemUrl = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var modelData: ModelData
-
+    
     
     var body: some View {
-        Text("Add Common Ingredient Form")
-            .font(.title)
-        NavigationStack{
-            VStack{
-                
-                Image("iconLogoSquare")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width:120, height: 120)
-                    .padding(.vertical, 32)
-                //image
-                
-                //form fields
-                VStack(spacing: 24){
-                    InputView(text: $commonName,
-                              title: "Ingredient Common Name",
-                              placeholder: "Calcium")
-                    .autocorrectionDisabled(true)
-                    
-//                    InputView(text: $isFlagged,
-//                              title: "Full Name",
-//                              placeholder: "Jane Doe")
-//                    .autocorrectionDisabled(true)
-                    
-                    InputView(text:$sourceUrl,
-                              title:"Source Url",
-                              placeholder: "www.pubmed.com"
-                              )
-                    .autocorrectionDisabled(true)
-                    
-                    ZStack(alignment: .trailing){
-                        InputView(text:$pubChemUrl,
-                                  title:"PubChemUrl",
-                                  placeholder: "www.pubChem.com"
-                                  )
-                        .autocorrectionDisabled(true)
-                        
-                        
+        ZStack {
+            Section{
+                NavigationStack{
+                    ScrollView{
+                        Text("Add Common Ingredient Form")
+                            .font(.title)
+                        //form fields
+                        VStack(spacing: 24){
+                            InputView(text: $commonName,
+                                      title: "Ingredient Common Name",
+                                      placeholder: "Calcium")
+                            .autocorrectionDisabled(true)
+                            
+                            //                    InputView(text: $isFlagged,
+                            //                              title: "Full Name",
+                            //                              placeholder: "Jane Doe")
+                            //                    .autocorrectionDisabled(true)
+                            
+                            InputView(text:$sourceUrl,
+                                      title:"Source Url",
+                                      placeholder: "www.pubmed.com"
+                            )
+                            .autocorrectionDisabled(true)
+                            
+                            ZStack(alignment: .trailing){
+                                InputView(text:$pubChemUrl,
+                                          title:"PubChemUrl",
+                                          placeholder: "www.pubChem.com"
+                                )
+                                .autocorrectionDisabled(true)
+                                
+                                
+                            }
+                        }
                     }
+                    .padding(.horizontal)
+                    .padding(.top, 12)
+                    
+                    
+                    // signin button
+                    Button{
+                        Task {
+                            addCommonIngredient()
+                        }
+                    } label: {
+                        HStack {
+                            Text("Add Common Ingredient")
+                                .fontWeight(.semibold)
+                            Image(systemName: "arrow.right")
+                        }
+                        .foregroundColor(.white)
+                        .frame(width: 350, height: 48)
+                    }
+                    .disabled(!formIsValid)
+                    .opacity(formIsValid ? 1.0 : 0.5)
+                    .background(Color(.systemBlue))
+                    .cornerRadius(10)
+                    .padding(.top, 24)
+                    
                 }
+                
             }
-            .padding(.horizontal)
-            .padding(.top, 12)
+        }
+    }
+        private func addCommonIngredient () {
+            modelData.ingredientListViewModel.addCommon(inputName: commonName,
+                                                        commonName: commonName,
+                                                        isCommonName: true,
+                                                        isFlagged: isFlagged,
+                                                        sourceUrl: sourceUrl,
+                                                        pubChemUrl: pubChemUrl )
             
-            
-            // signin button
-            Button{
-                Task {
-                    addCommonIngredient()
-                }
-            } label: {
-                HStack {
-                    Text("Add Common Ingredient")
-                        .fontWeight(.semibold)
-                    Image(systemName: "arrow.right")
-                }
-                .foregroundColor(.white)
-                .frame(width:350, height: 48)
-            }
-            .disabled(!formIsValid)
-            .opacity(formIsValid ? 1.0 : 0.5)
-            .background(Color(.systemBlue))
-            .cornerRadius(10)
-            .padding(.top, 24)
-            
-            Spacer()
             
         }
-        
-    }
-    private func addCommonIngredient () {
-        modelData.ingredientListViewModel.addCommon(inputName: commonName,
-                                                    commonName: commonName,
-                                                    isCommonName: true,
-                                                    isFlagged: isFlagged,
-                                                    sourceUrl: sourceUrl,
-                                                    pubChemUrl: pubChemUrl )
-        
-    }
-    
     
 }
-
     
 
 

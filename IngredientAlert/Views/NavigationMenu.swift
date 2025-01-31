@@ -12,6 +12,7 @@ enum Page : String, CaseIterable { // 1
     case Home
     case Products
     case Ingredients
+    case Admin
     case Account
     case Help
 }
@@ -54,6 +55,9 @@ struct TopNavMenu: View {
             else if selectedPage.rawValue == "Account" {
                 let loggedIn = modelData.authViewModel.userSession != nil
                 Account(isLoggedIn: loggedIn)
+                    .environmentObject(modelData)
+            }else if selectedPage.rawValue == "Admin" {
+                Admin()
                     .environmentObject(modelData)
             }
 //            else if selectedPage.rawValue == "Products" {

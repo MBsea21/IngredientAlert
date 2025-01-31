@@ -9,33 +9,25 @@ import SwiftUI
 
 struct Ingredients: View {
     @EnvironmentObject var modelData: ModelData
+    @State private var addCommonIngredientisOn : Bool = false
     
     var body: some View {
-        let currentUser = modelData.authViewModel.currentUser
-        if currentUser?.isAdmin == true {
-            VStack {
-                NavigationStack{
-                    
-                
-                NavigationLink {
-                    AddCommonIngredientForm()
-                        .environmentObject(modelData)
-                } label: {
-                    Label("Add Common Ingredient", systemImage:  "plus.diamond.fill")
-                    
-                }
-            }
+        Section{
+            IngredientList()
+                .environmentObject(modelData)
+            Spacer()
         }
-            
-        } else {
-                Text("Ingredients List")
-            
-            
-        }
+        
     }
 }
 
-#Preview {
-    Ingredients()
-        .environmentObject(ModelData())
-}
+        
+    
+
+
+//#Preview {
+//    let modelData = ModelData()
+//    let ingredients = modelData.ingredientListViewModel.$ingredientViewModels
+//    Ingredients(ingredients:binding.constant.ingredients)
+//        .environmentObject(modelData)
+//}
