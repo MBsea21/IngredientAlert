@@ -44,4 +44,8 @@ class IngredientListViewModel: ObservableObject {
                                        sourceUrl: sourceUrl,
                                        pubChemUrl: pubChemUrl)
     }
+    func addProductIngredient(inputName:String) -> String{
+        return ingredientRepository.addIngredientFromProductForm(inputName: inputName)
+    }
 }
+

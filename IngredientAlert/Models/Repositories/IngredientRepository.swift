@@ -39,8 +39,8 @@ class IngredientRepository: ObservableObject {
             let newCommonReference = store.collection(path).document()
             let newCommonIngredientId = newCommonReference.documentID
             let newCommonIngredient = Ingredient(id: newCommonIngredientId,
-                                                 inputName: inputName,
-                                                 commonName: commonName,
+                                                 inputName: inputName.lowercased(),
+                                                 commonName: commonName.lowercased(),
                                                  isCommonName: true,
                                                  commonNameId: newCommonIngredientId,
                                                  isFlagged: isFlagged,
@@ -59,8 +59,8 @@ class IngredientRepository: ObservableObject {
             let newOtherNameRefrence = store.collection(path).document()
             let newOtherNameIngredientId = newOtherNameRefrence.documentID
             let newOtherNameIngredient = Ingredient(id: newOtherNameIngredientId,
-                                                    inputName: inputName,
-                                                    commonName: commonName,
+                                                    inputName: inputName.lowercased(),
+                                                    commonName: commonName.lowercased(),
                                                     isCommonName: false,
                                                     commonNameId: commonNameId,
                                                     isFlagged: isFlagged,
@@ -72,6 +72,28 @@ class IngredientRepository: ObservableObject {
                 fatalError("DEBUG: unable to add other ingredient name \(inputName): \(error.localizedDescription)")
             }
         }
+    }
+    func addIngredientFromProductForm(inputName: String) -> String{
+        do {
+            let newProductIngredientReference = store.collection(path).document()
+            let newProductIngredientId = newProductIngredientReference.documentID
+            let newProductIngredient = Ingredient(id:newProductIngredientId,
+                                                  inputName: inputName.lowercased(),
+                                                  commonName: inputName.lowercased(),
+                                                  isCommonName: true,
+                                                  commonNameId: newProductIngredientId,
+                                                  isFlagged: false,
+                                                  sourceUrl: "",
+                                                  pubChemUrl: ""
+            )
+            do {
+                try store.collection(path).document(newProductIngredientId).setData(from:newProductIngredient)
+                return newProductIngredientId
+            } catch {
+                fatalError("DEBUG: unable to add product ingredient \(newProductIngredientId) to ingredient list: \(error.localizedDescription)")
+            }
+        }
+            
     }
     
     func update(_ ingredient: Ingredient) {

@@ -60,10 +60,10 @@ struct TopNavMenu: View {
                 Admin()
                     .environmentObject(modelData)
             }
-//            else if selectedPage.rawValue == "Products" {
-//                Products()
-//                    .environmentObject(ModelData())
-//            }
+            else if selectedPage.rawValue == "Products" {
+                Products()
+                    .environmentObject(modelData)
+            }
             else if selectedPage.rawValue == "Help" {
                 Help()
             }

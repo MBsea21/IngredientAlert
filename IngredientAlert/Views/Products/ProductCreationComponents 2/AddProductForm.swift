@@ -1,0 +1,157 @@
+//
+//  NewProductForm.swift
+//  IngredientAlert
+//
+//  Created by Madeline Bennett on 2/3/25.
+//
+
+import SwiftUI
+
+struct AddProductForm: View {
+    @State private var name = ""
+    @State private var brand = ""
+    @State private var use = ""
+    @State private var useArea = ""
+    @State private var productIngredientsInput = ""
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var modelData: ModelData
+    
+    var body: some View {
+        ZStack {
+            Section{
+                NavigationStack{
+                    ScrollView{
+                        Text("Add Product Form")
+                            .font(.title)
+                        //form fields
+                        VStack(spacing: 24){
+                            InputView(text: $name,
+                                      title: "Product Name",
+                                      placeholder: "Moisturizing Shampoo Bar")
+                            .autocorrectionDisabled(true)
+                            
+                            InputView(text:$brand,
+                                      title:"Brand",
+                                      placeholder: "Shampoorama"
+                            )
+                            .autocorrectionDisabled(true)
+                            
+                            InputView(text:$productIngredientsInput,
+                                      title:"Product Ingredients",
+                                      placeholder: "Please separate ingredients with a ,"
+                            )
+                            .autocorrectionDisabled(true)
+                            InputView(text:$use,
+                                      title:"Use",
+                                      placeholder: "Ex: Shampoo,"
+                            )
+                            .autocorrectionDisabled(true)
+                            InputView(text:$useArea,
+                                      title:"Use Area",
+                                      placeholder: "Ex: Hair,"
+                            )
+                            .autocorrectionDisabled(true)
+                            
+                            Button{
+                                Task {
+                                    addProduct()
+                                }
+                            } label: {
+                                HStack {
+                                    Text("Add Product")
+                                        .fontWeight(.semibold)
+                                    Image(systemName: "arrow.right")
+                                }
+                                .foregroundColor(.white)
+                                .frame(width: 350, height: 48)
+                            }
+                            .disabled(!formIsValid)
+                            .opacity(formIsValid ? 1.0 : 0.5)
+                            .background(Color(.systemBlue))
+                            .cornerRadius(10)
+                            .padding(.top, 24)
+                            
+                            
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                
+                // signin button
+               
+                
+            }
+            
+        }
+        
+    }
+    private func splitProductIngredientInput (_ productIngredients: String) -> [String] {
+        let lowercaseIngredients = productIngredients.lowercased()
+        let spacesRemovedIngredients = lowercaseIngredients.replacingOccurrences(of: " ", with: "")
+        let ingredientsStringList : [String] = spacesRemovedIngredients.components(separatedBy: ",")
+        print("line 81 met for splitting ingredients, \(ingredientsStringList)")
+        return ingredientsStringList
+    }
+
+
+
+    
+    private func findIngredientIds (ingredients:[Ingredient],  productIngredients: String) -> [String] {
+        let productIngredientsStringList = splitProductIngredientInput(productIngredients)
+        var productIngredientIds: [String] = []
+        for productIngredient in productIngredientsStringList {
+            for ingredient in ingredients {
+                if ingredient.inputName == productIngredient {
+                    let ingredientId = ingredient.id
+                    productIngredientIds.append(ingredientId!)
+                } else {
+                    print("new ingredient needs to be created \(ingredient)")
+//                    let newIngredientId = modelData.ingredientListViewModel.addProductIngredient(inputName: productIngredient)
+//                    productIngredientIds.append(newIngredientId)
+                }
+            }
+        }
+        return productIngredientIds
+    }
+    
+    
+    private func addProduct () {
+        let currentUser = modelData.authViewModel.currentUser
+        let currentUserId = currentUser?.id
+        let productIngredientsStrings = splitProductIngredientInput(productIngredientsInput)
+//        let productIngredientIds = findIngredientIds(ingredients:modelData.ingredientListViewModel.ingredientRepository.ingredients, productIngredients: productIngredientsInput)
+        modelData.productListViewModel.addProduct(name:name,
+                                                  brand: brand,
+                                                  use: use,
+                                                  useArea: useArea,
+                                                  inputProductIngredients: productIngredientsStrings,
+                                                  uploaderId: currentUserId!
+            )
+        
+    }
+}
+
+
+// MARK: AuthenticationFormProtocol
+
+extension AddProductForm: ProductAuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !name.isEmpty
+        && !productIngredientsInput.isEmpty
+        && !brand.isEmpty
+        && !use.isEmpty
+        && !useArea.isEmpty
+    }
+}
+
+
+
+
+struct AddProductForm_Previews: PreviewProvider {
+    static var previews: some View {
+        AddProductForm()
+    }
+}
+

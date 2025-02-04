@@ -61,7 +61,7 @@ struct AddOtherIngredientNamesForm: View {
         let pubChemUrl = ingredient.pubChemUrl
         
         if multipleNamesIsOn {
-            let nameList : [String] = inputNames.components(separatedBy: "*~")
+            let nameList : [String] = inputNames.components(separatedBy: "*")
             for name in nameList {
                 
                 modelData.ingredientListViewModel.addOtherName(inputName: name,

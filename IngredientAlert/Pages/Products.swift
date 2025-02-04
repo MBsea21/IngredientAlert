@@ -11,6 +11,8 @@ struct Products: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
+        AddProductForm()
+            .environmentObject(modelData)
         Text("PRODUCTS PAGE")
 //        ProductList()
 //            .environmentObject(modelData)
