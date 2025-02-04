@@ -14,7 +14,6 @@ class ProductRepository: ObservableObject {
     private let store = Firestore.firestore()
     
     @Published var productsBE: [ProductBE] = []
-    @Published var productsFE: [ProductFE] = []
     
     private var cancellables: Set<AnyCancellable> = []
     

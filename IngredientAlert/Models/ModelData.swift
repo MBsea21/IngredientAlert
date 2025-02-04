@@ -45,6 +45,7 @@ class ModelData: ObservableObject{
     @Published var authViewModel: AuthViewModel = createViewModel()
     @Published var ingredientListViewModel: IngredientListViewModel = createIngredientListViewModel()
     @Published var productListViewModel: ProductListViewModel = createProductListViewModel()
+
     }
 
 

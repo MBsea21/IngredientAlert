@@ -9,17 +9,17 @@ import SwiftUI
 
 struct Products: View {
     @EnvironmentObject var modelData: ModelData
+    @State var productsList: [ProductFE]
     
     var body: some View {
-        AddProductForm()
+        ProductList(productsList: productsList)
             .environmentObject(modelData)
-        Text("PRODUCTS PAGE")
-//        ProductList()
-//            .environmentObject(modelData)
     }
 }
 
 #Preview {
-    Products()
+    let modelData = ModelData()
+    let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredients: modelData.ingredientListViewModel.ingredientRepository.ingredients)
+    Products(productsList: productsList)
         .environmentObject(ModelData())
 }

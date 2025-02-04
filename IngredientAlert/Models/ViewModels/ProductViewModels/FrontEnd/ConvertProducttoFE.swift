@@ -4,26 +4,21 @@
 //
 //  Created by Madeline Bennett on 2/4/25.
 //
-
-func convertProductToFE (BEProducts: [ProductBE], ingredients:[Ingredient]) -> [ProductFE] {
-    var FEProducts: [ProductFE] = []
-    for product in BEProducts {
-        let FEID = product.id
-        let name = product.name
-        let brand = product.brand
-        let use = product.use
-        let useArea = product.useArea
-        var productIngredients: [Ingredient] = []
-        var flaggedIngredients: [Ingredient] = []
-        var isFlagged: Bool?
-        // find product ingredients
-        for ingredientString in product.inputProductIngredients {
-            var matchingIngredients: [Ingredient] {
-                ingredients.filter{ (ingredient) -> Bool in
-                    return ingredient.inputName == ingredientString
-                }
+func convertBEProductToFEProduct (BEProduct: ProductBE, ingredients: [Ingredient]) -> ProductFE {
+    let FEID = BEProduct.id
+    let name = BEProduct.name
+    let brand = BEProduct.brand
+    let use = BEProduct.use
+    let useArea = BEProduct.useArea
+    let productIngredients: [Ingredient] = []
+    var flaggedIngredients: [Ingredient] = []
+    var isFlagged: Bool?
+    // find product ingredients
+    for ingredientString in BEProduct.inputProductIngredients {
+        var matchingIngredients: [Ingredient] {
+            ingredients.filter{ (ingredient) -> Bool in
+                return ingredient.inputName == ingredientString
             }
-            productIngredients.append(contentsOf: matchingIngredients)
         }
         for ingredient in productIngredients {
             if ingredient.isFlagged {
@@ -35,18 +30,26 @@ func convertProductToFE (BEProducts: [ProductBE], ingredients:[Ingredient]) -> [
         }else {
             isFlagged = false
         }
+    }
         
-        let productInstance = ProductFE(id: FEID,
-                                    name: name,
-                                    brand: brand,
-                                    use: use,
-                                    useArea: useArea,
-                                    productIngredients: productIngredients,
-                                    flaggedIngredients: flaggedIngredients,
-                                    isFlagged: isFlagged
-        )
+    let productInstance = ProductFE(id: FEID,
+                                        name: name,
+                                        brand: brand,
+                                        use: use,
+                                        useArea: useArea,
+                                        productIngredients: productIngredients,
+                                        flaggedIngredients: flaggedIngredients,
+                                        isFlagged: isFlagged)
+        
+    return productInstance
+}
+
+
+func convertBEProductsListToFE (BEProducts: [ProductBE], ingredients:[Ingredient]) -> [ProductFE] {
+    var FEProducts: [ProductFE] = []
+    for product in BEProducts {
+        let productInstance = convertBEProductToFEProduct(BEProduct: product, ingredients: ingredients)
         FEProducts.append(productInstance)
     }
     return FEProducts
 }
-
