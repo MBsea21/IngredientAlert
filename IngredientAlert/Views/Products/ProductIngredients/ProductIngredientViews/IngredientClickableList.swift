@@ -11,7 +11,8 @@ import Foundation
 struct IngredientClickableList: View {
     var flaggedIngredients: [Ingredient]
 //    var userFlaggedIngredients: [Ingredient]
-    var productIngredients: [Ingredient]
+    var unflaggedIngredients: [Ingredient]
+    var unaddedIngredients: [String]
     
     var body: some View {
         ScrollView(.vertical){
@@ -70,7 +71,7 @@ struct IngredientClickableList: View {
             ScrollView (.horizontal, showsIndicators:true) {
                 HStack(spacing: 20){
                     Spacer()
-                    ForEach(productIngredients) { ingredient in
+                    ForEach(unflaggedIngredients) { ingredient in
                         NavigationLink {
                             IngredientDetail(ingredient: ingredient)
                         } label: {

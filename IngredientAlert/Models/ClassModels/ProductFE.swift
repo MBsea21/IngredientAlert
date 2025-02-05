@@ -14,8 +14,10 @@ struct ProductFE: Hashable, Codable, Identifiable {
     var brand: String
     var use: String
     var useArea: String
-    var productIngredients: [Ingredient]
+    var productIngredients: [String]
     var flaggedIngredients: [Ingredient]
+    var unflaggedIngredients: [Ingredient]
+    var unaddedIngredients: [String]
     var isFlagged: Bool
     var uploaderId: String
     

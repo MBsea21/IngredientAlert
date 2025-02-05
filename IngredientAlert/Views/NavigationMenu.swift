@@ -20,10 +20,20 @@ enum Page : String, CaseIterable { // 1
 struct TopNavMenu: View {
     @EnvironmentObject var modelData: ModelData
     @State var selectedPage = Page.Home
-    
+    @State var ingredientDict: [String: Ingredient] = [:]
+    private func getIngredientDict (ingredients: [Ingredient]) -> [String: Ingredient] {
+        var ingredientDict: [String: Ingredient] = [:]
+        for ingredient in ingredients {
+            print("Ingredient Repository, ingredient is : \(ingredient)")
+            ingredientDict[ingredient.inputName] = ingredient
+        }
+        return ingredientDict
+    }
     
     var body: some View {
-        let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredients: modelData.ingredientListViewModel.ingredientRepository.ingredients)
+        let ingredientDict = getIngredientDict(ingredients: modelData.ingredientListViewModel.ingredientRepository.ingredients)
+        let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict:ingredientDict)
+        
         
         Section{
             HStack{

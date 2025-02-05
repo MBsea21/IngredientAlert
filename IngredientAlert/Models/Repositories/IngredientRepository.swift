@@ -12,9 +12,8 @@ import Combine
 class IngredientRepository: ObservableObject {
     private let path: String = "ingredients"
     private let store = Firestore.firestore()
-    
     @Published var ingredients: [Ingredient] = []
-    
+    @Published var ingredientsDict: [String: Ingredient] = [:]
     private var cancellables: Set<AnyCancellable> = []
     
     init () {
@@ -33,6 +32,11 @@ class IngredientRepository: ObservableObject {
                 } ?? []
                 
             }
+//        for ingredient in self.ingredients {
+//            
+//            print("Ingredient Repository, ingredient is : \(ingredient)")
+//            self.ingredientsDict[ingredient.inputName] = ingredient
+//        }
     }
     func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) {
         do {

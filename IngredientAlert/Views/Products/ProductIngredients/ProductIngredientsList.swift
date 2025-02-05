@@ -11,25 +11,12 @@ import Foundation
 struct ProductIngredientsList: View {
     @EnvironmentObject var modelData: ModelData
     @State var showIngredientDetails : Bool = false
-    
     var product : ProductFE
-    
-    
-    //    var userFlaggedIngredients: [Ingredient] {
-    //        productIngredients.filter{ (ingredient) -> Bool in
-    //            return modelData.profile.personalFlaggedList.contains(ingredient.id)}
-    //    }
-//    var unflaggedIngredients: [Ingredient] {
-//        productIngredients.filter { (ingredient) -> Bool in
-//            return ingredient.isFlagged == false}
-//    }
-    
-    
-    
+
     var body: some View {
-        var productIngredients = product.productIngredients
-        var flaggedIngredients = product.flaggedIngredients
-//        var unflaggedIngredients = product.unflaggedIngredients
+        let flaggedIngredients = product.flaggedIngredients
+        let unflaggedIngredients = product.unflaggedIngredients
+        let unaddedIngredients = product.unaddedIngredients
         Section {
             HStack {
                 Text("Ingredients")
@@ -37,7 +24,6 @@ struct ProductIngredientsList: View {
                     .scaledToFill()
                     .padding()
                     .accessibilityLabel("Product Ingredients Menu")
-                
                 Spacer()
                 VStack{
                     Section{
@@ -52,18 +38,19 @@ struct ProductIngredientsList: View {
                     }
                 }
             }
+        }
             
             if showIngredientDetails {
-                IngredientClickableList(flaggedIngredients: flaggedIngredients, productIngredients: productIngredients/*, userFlaggedIngredients: userFlaggedIngredients,*//* unflaggedIngredients: unflaggedIngredients*/)
+                IngredientClickableList(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
                 
             } else {
-//                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients,  /*userFlaggedIngredients: userFlaggedIngredients,*/ unflaggedIngredients: unflaggedIngredients)
+                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
             }
         }
+
     }
     
-    
-}
+
                 
         
     

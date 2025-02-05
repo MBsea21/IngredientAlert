@@ -11,13 +11,50 @@ import Foundation
 struct ProductIngredientParagraph: View {
     var flaggedIngredients: [Ingredient]
 //    var userFlaggedIngredients: [Ingredient]
-    var productIngredients: [Ingredient]
-    
+    var unflaggedIngredients: [Ingredient]
+    var unaddedIngredients: [String]
+    private func getUnaddedIngredientString (unaddedIngredients: [String]) -> String {
+        var unaddedIngredientString = ""
+        for ingredient in unaddedIngredients  {
+            unaddedIngredientString.append(ingredient + ", ")
+        }
+        return unaddedIngredientString
+    }
+    var flagged: AttributedString{
+        var result = AttributedString(ingredientParagraphFunction(flaggedIngredients))
+            result.foregroundColor = .red
+        return result
+    }
+    var unflagged: AttributedString{
+        var result = AttributedString(ingredientParagraphFunction(unflaggedIngredients))
+            result.foregroundColor = .gray
+        return result
+    }
+    var unadded: AttributedString {
+        var result =
+        AttributedString(getUnaddedIngredientString(unaddedIngredients: unaddedIngredients))
+        result.foregroundColor = .lightGray
+        return result
+    }
     
     
     
     var body: some View {
         VStack{
+            if flagged != "" && unflagged != "" && unadded != "" {
+                Text(flagged + ", " + unflagged + ", " + unadded)
+            } else if flagged == "" && unflagged != "" && unadded != ""  {
+                Text(unflagged + ", " + unadded)
+                
+            }else if flagged != "" && unflagged == "" && unadded != "" {
+                Text(flagged + ", " + unadded)
+            } else if flagged != "" &&
+                        unflagged != "" &&
+                        unadded == "" {
+                Text(flagged + ", " + unflagged)
+            } else if flagged == "" && unflagged == ""  && unadded != "" {
+                Text(unadded)
+            }
 //            HStack{
 //                let userFlaggedIngredientString = ingredientParagraphFunction(userFlaggedIngredients)
 //                Text(userFlaggedIngredientString)
@@ -25,19 +62,6 @@ struct ProductIngredientParagraph: View {
 //                    .accessibilityLabel("User Flagged Ingredients")
 //                Spacer()
 //            }
-            HStack{
-                let flaggedIngredientString = ingredientParagraphFunction(flaggedIngredients)
-                Text(flaggedIngredientString)
-                    .foregroundColor(.red)
-                    .accessibilityLabel("Flagged Ingredients")
-                Spacer()
-            }
-            HStack {
-                let productIngredientString = ingredientParagraphFunction(productIngredients)
-                Text(productIngredientString)
-                Spacer()
-            }
-
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding()

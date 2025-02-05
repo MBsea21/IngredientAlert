@@ -52,7 +52,7 @@ struct ProductList: View {
 
 #Preview {
     let modelData = ModelData()
-    let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredients: modelData.ingredientListViewModel.ingredientRepository.ingredients)
+    let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict: modelData.ingredientListViewModel.ingredientRepository.ingredientsDict)
     ProductList(productsList: productsList)
         .environmentObject(ModelData())
 }
