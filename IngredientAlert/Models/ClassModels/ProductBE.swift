@@ -17,6 +17,4 @@ struct ProductBE: Hashable, Codable, Identifiable {
     var useArea: String
     var inputProductIngredients: [String]
     var uploaderId: String
-    
-    
 }

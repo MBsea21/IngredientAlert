@@ -19,7 +19,7 @@ struct ProductRow: View {
                     .font(.headline)
                     .foregroundColor(Color.gray)
                 
-                if product.isFlagged! {
+                if product.isFlagged == true {
                     Text(product.name)
                         .foregroundColor(.red)
                 }else {

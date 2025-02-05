@@ -38,24 +38,23 @@ struct ProductDetail: View {
                     .font(.subheadline)
                 Text(product.useArea)
                     .font(.subheadline)
+                Text("\(product.isFlagged)")
                 
                 
             }.multilineTextAlignment(.center)
         }
         
-        if product.isFlagged! {
+        if product.isFlagged {
             Text("This product has been flagged for containing skin irritating ingredients!")
                 .padding(.bottom)
                 .foregroundColor(.red)
         }
         Divider()
-        //            Divider()
-        //            Section {
-        
-        //                ProductIngredientsList(product: product)
-        //                    .environmentObject(modelData)
-        //            }
-        //            Divider()
+        Section {
+            ProductIngredientsList(product: product)
+                .environmentObject(modelData)
+        }
+        Divider()
         Spacer()
     }
         

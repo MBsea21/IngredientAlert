@@ -16,8 +16,8 @@ struct ProductFE: Hashable, Codable, Identifiable {
     var useArea: String
     var productIngredients: [Ingredient]
     var flaggedIngredients: [Ingredient]
-    var isFlagged: Bool?
-    var uploaderId: String?
+    var isFlagged: Bool
+    var uploaderId: String
     
     
     

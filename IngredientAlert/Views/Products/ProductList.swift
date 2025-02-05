@@ -17,7 +17,7 @@ struct ProductList: View {
     
     var filteredProducts: [ProductFE] {
         productsList.filter { product in
-            (!showFlaggedOnly || (product.isFlagged != nil))
+            (!showFlaggedOnly || (product.isFlagged == true))
         }
     }
     var body: some View {

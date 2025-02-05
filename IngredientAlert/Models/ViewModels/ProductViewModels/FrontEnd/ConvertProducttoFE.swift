@@ -10,27 +10,34 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredients: [Ingredient
     let brand = BEProduct.brand
     let use = BEProduct.use
     let useArea = BEProduct.useArea
-    let productIngredients: [Ingredient] = []
+    let uploaderId = BEProduct.uploaderId
+    var productIngredients: [Ingredient] = []
     var flaggedIngredients: [Ingredient] = []
-    var isFlagged: Bool?
+    var isFlagged: Bool? = true
+    
     // find product ingredients
+    
+    
     for ingredientString in BEProduct.inputProductIngredients {
-        var matchingIngredients: [Ingredient] {
-            ingredients.filter{ (ingredient) -> Bool in
-                return ingredient.inputName == ingredientString
+        for ingredient in ingredients {
+            if ingredient.inputName == ingredientString {
+                productIngredients.append(ingredient)
             }
-        }
-        for ingredient in productIngredients {
-            if ingredient.isFlagged {
-                flaggedIngredients.append(ingredient)
-            }
-        }
-        if flaggedIngredients != [] {
-            isFlagged = true
-        }else {
-            isFlagged = false
         }
     }
+    
+    for ingredient in productIngredients {
+        if ingredient.isFlagged {
+            flaggedIngredients.append(ingredient)
+        }
+        
+    }
+   
+    if flaggedIngredients != [] {
+        isFlagged = true
+        } else {
+            isFlagged = false
+        }
         
     let productInstance = ProductFE(id: FEID,
                                         name: name,
@@ -39,7 +46,8 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredients: [Ingredient
                                         useArea: useArea,
                                         productIngredients: productIngredients,
                                         flaggedIngredients: flaggedIngredients,
-                                        isFlagged: isFlagged)
+                                        isFlagged: isFlagged!,
+                                        uploaderId: uploaderId)
         
     return productInstance
 }
