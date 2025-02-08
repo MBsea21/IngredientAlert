@@ -14,7 +14,6 @@ protocol IngredientAuthenticationFormProtocol {
 
 class IngredientListViewModel: ObservableObject {
     @Published var ingredientViewModels: [IngredientViewModel] = []
-    
     private var cancellables: Set<AnyCancellable> = []
     
     @Published var ingredientRepository = IngredientRepository()

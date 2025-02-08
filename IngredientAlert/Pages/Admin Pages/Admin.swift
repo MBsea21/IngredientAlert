@@ -10,6 +10,8 @@ struct Admin: View {
     @EnvironmentObject var modelData: ModelData
     @State private var addCommonIngredientsIsOn: Bool = false
     @State private var addOtherIngredientNamesIsOn: Bool = false
+    @State private var addMissingIngredientsisOn: Bool = false
+    var productList: [ProductFE]
     
     var body: some View {
         Section{
@@ -18,6 +20,7 @@ struct Admin: View {
                 Toggle("Add Common Ingredient", isOn: $addCommonIngredientsIsOn)
                     .fontWeight(.semibold)
                     .padding()
+                
                 
                 if addCommonIngredientsIsOn {
                     Section{
@@ -31,6 +34,14 @@ struct Admin: View {
                     .padding()
                 if addOtherIngredientNamesIsOn {
                     CommonIngredientNameList()
+                        .environmentObject(modelData)
+                    
+                }
+                Toggle("Add Missing Ingredients", isOn: $addMissingIngredientsisOn)
+                    .fontWeight(.semibold)
+                    .padding()
+                if addMissingIngredientsisOn {
+                    AddMissingIngredientsForm(productList:productList)
                         .environmentObject(modelData)
                     
                 }

@@ -14,6 +14,7 @@ class ProductRepository: ObservableObject {
     private let store = Firestore.firestore()
     
     @Published var productsBE: [ProductBE] = []
+    @Published var productsFE: [ProductFE] = []
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -32,6 +33,7 @@ class ProductRepository: ObservableObject {
                     try? document.data(as: ProductBE.self)
                 } ?? []
                 
+                NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
             }
     }
     func addProduct(name: String, brand: String, use:String, useArea: String, uploaderId: String, inputProductIngredients: [String]) -> Bool {

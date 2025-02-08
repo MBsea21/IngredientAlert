@@ -16,6 +16,12 @@ class IngredientRepository: ObservableObject {
     @Published var ingredientsDict: [String: Ingredient] = [:]
     private var cancellables: Set<AnyCancellable> = []
     
+    private func setIngredientDict () {
+        for ingredient in ingredients {
+            ingredientsDict[ingredient.inputName] = ingredient
+        }
+    }
+    
     init () {
         self.get()
     }
@@ -31,12 +37,9 @@ class IngredientRepository: ObservableObject {
                     try? document.data(as: Ingredient.self)
                 } ?? []
                 
+                NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
+                self.setIngredientDict()
             }
-//        for ingredient in self.ingredients {
-//            
-//            print("Ingredient Repository, ingredient is : \(ingredient)")
-//            self.ingredientsDict[ingredient.inputName] = ingredient
-//        }
     }
     func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) {
         do {

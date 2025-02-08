@@ -6,8 +6,8 @@
 //
 import SwiftUI
 
-struct WordToggleView: View {
-    @EnvironmentObject modelData : ModelData
+struct MissingWordToggleView: View {
+    @EnvironmentObject var modelData : ModelData
     var word: String
     @State var text: String = ""
     @State var sourceUrl: String =  ""
@@ -62,6 +62,7 @@ struct WordToggleView: View {
                                                         isFlagged: isFlagged,
                                                         sourceUrl: sourceUrl,
                                                         pubChemUrl: pubChemUrl )
+            wordToggle = false
     }
                     
 }

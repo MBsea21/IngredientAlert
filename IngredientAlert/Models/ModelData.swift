@@ -37,17 +37,41 @@ import Foundation
 import SwiftUI
 
 @MainActor
-class ModelData: ObservableObject{
-//    @Published var ingredients: [Ingredient] = load("oneIngredientData.json")
-//    @Published var products: [Product] = load("Products.json")
-    @Published var allergens: [Allergen] = load("Allergens.json")
-//    @Published var profile: User = User.default
-    @Published var authViewModel: AuthViewModel = createViewModel()
-    @Published var ingredientListViewModel: IngredientListViewModel = createIngredientListViewModel()
-    @Published var productListViewModel: ProductListViewModel = createProductListViewModel()
+class ModelData: ObservableObject {
+    @Published var authViewModel: AuthViewModel
+    @Published var ingredientListViewModel: IngredientListViewModel
+    @Published var productListViewModel: ProductListViewModel
+    
+    init() {
+        authViewModel = createViewModel()
+        let ingredientListViewModel = createIngredientListViewModel()
+        self.ingredientListViewModel = ingredientListViewModel
+        let productListViewModel = createProductListViewModel()
+        self.productListViewModel = productListViewModel
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
+    }
+    
+    @objc func ingredientsProductsLoadedHandler(notification: NSNotification) {
+        print("handler called")
+        
+        if (!self.ingredientListViewModel.ingredientRepository.ingredients.isEmpty &&
+            !self.productListViewModel.productRepository.productsBE.isEmpty) {
+            print("all data loaded!")
+            print("ingredientsCount: ", self.ingredientListViewModel.ingredientRepository.ingredients.count)
+            print("productsCount: ", self.productListViewModel.productRepository.productsBE.count)
+//            self.productListViewModel.productRepository.productsFE.append(<#T##newElement: ProductFE##ProductFE#>)
 
+        } else {
+            print("data still missing")
+        }
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
+    }
+}
 
 func createViewModel() -> AuthViewModel {
     let authViewModel = AuthViewModel()
@@ -64,26 +88,9 @@ func createProductListViewModel () -> ProductListViewModel {
     return productListViewModel
 }
 
-func load<T: Decodable>(_ filename: String) -> T {
-    let data: Data
-    
-    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
-    else {
-        fatalError("Couldn't find \(filename) in main bundle.")
-    }
-    
-    do {
-        data = try Data(contentsOf: file)
-    } catch {
-        fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
-    }
-    
-    do {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    } catch {
-        fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
-    }
+func createProductsViewViewModel (productsRepository: Published<ProductRepository>.Publisher, ingredientsRepository: Published<IngredientRepository>.Publisher) -> ProductsViewViewModel {
+    let productListViewModel = ProductsViewViewModel(productsRepository: productsRepository, ingredientsRepository: ingredientsRepository)
+    return productListViewModel
 }
 
 

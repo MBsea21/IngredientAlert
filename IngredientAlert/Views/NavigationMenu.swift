@@ -21,17 +21,11 @@ struct TopNavMenu: View {
     @EnvironmentObject var modelData: ModelData
     @State var selectedPage = Page.Home
     @State var ingredientDict: [String: Ingredient] = [:]
-    private func getIngredientDict (ingredients: [Ingredient]) -> [String: Ingredient] {
-        var ingredientDict: [String: Ingredient] = [:]
-        for ingredient in ingredients {
-            print("Ingredient Repository, ingredient is : \(ingredient)")
-            ingredientDict[ingredient.inputName] = ingredient
-        }
-        return ingredientDict
-    }
-    
+    @State var productsList : [ProductFE] = []
+
+//
     var body: some View {
-        let ingredientDict = getIngredientDict(ingredients: modelData.ingredientListViewModel.ingredientRepository.ingredients)
+        let ingredientDict = modelData.ingredientListViewModel.ingredientRepository.ingredientsDict
         let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict:ingredientDict)
         
         
@@ -62,7 +56,8 @@ struct TopNavMenu: View {
         }
         Section{
             if selectedPage.rawValue == "Home" {
-                Home()
+                Home(productsList: productsList)
+                    .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Ingredients" {
                 Ingredients()
@@ -74,7 +69,7 @@ struct TopNavMenu: View {
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Admin" {
-                Admin()
+                Admin(productList: productsList)
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "AddProduct" {
@@ -92,7 +87,7 @@ struct TopNavMenu: View {
     }
 }
 
-#Preview{
-    TopNavMenu()
-        .environmentObject(ModelData())
-}
+//#Preview{
+//    TopNavMenu()
+//        .environmentObject(ModelData())
+//}

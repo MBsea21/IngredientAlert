@@ -13,7 +13,7 @@ protocol ProductAuthenticationFormProtocol {
 
 class ProductListViewModel: ObservableObject {
     @Published var productViewModels: [ProductViewModel] = []
-    
+
     private var cancellables: Set<AnyCancellable> = []
     
     @Published var productRepository = ProductRepository()

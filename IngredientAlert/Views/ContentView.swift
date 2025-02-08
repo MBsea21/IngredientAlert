@@ -9,14 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var modelData : ModelData
+
     
     var body: some View {
-        TopNavMenu()
-            .environmentObject(modelData)
+//        do {
+//            let ingredientsListRendered = modelData.ingredientListViewModel.ingredientRepository.ingredients
+//        }
+        
+//        if modelData.ingredientListViewModel.ingredientRepository.ingredients != [] {
+            TopNavMenu()
+                .environmentObject(modelData)
+//        }
+//        else {
+//            Text("Loading...")
+//        }
+        
     }
 }
 
-#Preview {
-    ContentView()
-        .environmentObject(ModelData())
-}
+//#Preview {
+//    ContentView(ingredient:)
+//        .environmentObject(ModelData())
+//}

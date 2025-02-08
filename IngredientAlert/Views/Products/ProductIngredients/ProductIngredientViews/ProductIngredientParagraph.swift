@@ -23,6 +23,7 @@ struct ProductIngredientParagraph: View {
     var flagged: AttributedString{
         var result = AttributedString(ingredientParagraphFunction(flaggedIngredients))
             result.foregroundColor = .red
+        
         return result
     }
     var unflagged: AttributedString{

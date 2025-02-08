@@ -12,7 +12,25 @@ struct ProductIngredientsList: View {
     @EnvironmentObject var modelData: ModelData
     @State var showIngredientDetails : Bool = false
     var product : ProductFE
-
+    
+    var flaggedKey: AttributedString{
+        var result = AttributedString("red = flagged")
+        result.foregroundColor = .red
+        
+        return result
+    }
+    var unflaggedKey: AttributedString{
+        var result = AttributedString("Dark Gray = unflagged")
+        result.foregroundColor = .gray
+        
+        return result
+    }
+    var unanalizedKey: AttributedString {
+        var result = AttributedString("gray = uanalyzed.")
+        result.foregroundColor = .lightGray
+        return result
+    }
+    
     var body: some View {
         let flaggedIngredients = product.flaggedIngredients
         let unflaggedIngredients = product.unflaggedIngredients
@@ -39,18 +57,37 @@ struct ProductIngredientsList: View {
                 }
             }
         }
-            
+        Section{
             if showIngredientDetails {
                 IngredientClickableList(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
                 
             } else {
                 ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
             }
+            Section{
+                if flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text(flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
+                } else if flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                    Text(flaggedKey + " | " + unflaggedKey )
+                } else if flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                    Text(flaggedKey + " | " + unanalizedKey )
+                } else if flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text(unflaggedKey + " | " + unanalizedKey )
+                } else if flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                    Text(unanalizedKey)
+                } else if flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                    Text(unflaggedKey)
+                } else if flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
+                    Text(flaggedKey)
+                }
+            }.font(.footnote)
+            
+            
         }
-
+        
     }
     
-
+}
                 
         
     
