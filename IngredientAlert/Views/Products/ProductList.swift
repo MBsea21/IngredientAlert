@@ -23,10 +23,6 @@ struct ProductList: View {
     var body: some View {
         NavigationSplitView {
             List{
-                Text("Products")
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                
                 Toggle(isOn: $showFlaggedOnly) {
                     Text("Show Flagged Products")
                 }

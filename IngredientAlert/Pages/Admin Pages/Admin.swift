@@ -11,7 +11,6 @@ struct Admin: View {
     @State private var addCommonIngredientsIsOn: Bool = false
     @State private var addOtherIngredientNamesIsOn: Bool = false
     @State private var addMissingIngredientsisOn: Bool = false
-    var productList: [ProductFE]
     
     var body: some View {
         Section{
@@ -41,7 +40,7 @@ struct Admin: View {
                     .fontWeight(.semibold)
                     .padding()
                 if addMissingIngredientsisOn {
-                    AddMissingIngredientsForm(productList:productList)
+                    AddMissingIngredientsForm(productList:modelData.productListViewModel.productRepository.productsFE)
                         .environmentObject(modelData)
                     
                 }

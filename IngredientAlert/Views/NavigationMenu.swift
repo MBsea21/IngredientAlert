@@ -25,9 +25,6 @@ struct TopNavMenu: View {
 
 //
     var body: some View {
-        let ingredientDict = modelData.ingredientListViewModel.ingredientRepository.ingredientsDict
-        let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict:ingredientDict)
-        
         
         Section{
             HStack{
@@ -56,7 +53,7 @@ struct TopNavMenu: View {
         }
         Section{
             if selectedPage.rawValue == "Home" {
-                Home(productsList: productsList)
+                Home()
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Ingredients" {
@@ -69,7 +66,7 @@ struct TopNavMenu: View {
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Admin" {
-                Admin(productList: productsList)
+                Admin()
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "AddProduct" {
@@ -77,7 +74,7 @@ struct TopNavMenu: View {
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Products" {
-                Products(productsList: productsList)
+                Products()
                     .environmentObject(modelData)
             }
             else if selectedPage.rawValue == "Help" {

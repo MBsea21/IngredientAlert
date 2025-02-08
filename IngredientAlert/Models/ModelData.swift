@@ -4,35 +4,6 @@
 //
 //  Created by Madeline  Bennett on 1/15/25.
 //
-//import Foundation
-//
-//@Observable
-//class ModelData {
-//    var ingredients: [Ingredient] = load("oneIngredientData.json")
-//}
-//
-//func load<T: Decodable>(_ filename: String) -> T {
-//
-//    let data: Data
-//
-//    guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
-//    else {
-//        fatalError("Couldn't find \(filename) in main bundle.")
-//    }
-//
-//    do {
-//        data = try Data(contentsOf: file)
-//    } catch {
-//        fatalError("Couldn't load \(filename) from main bundle: \n\(error)")
-//    }
-//    do {
-//        let decoder = JSONDecoder()
-//        return try decoder.decode(T.self, from: data)
-//    } catch {
-//        fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
-//
-//    }
-//}
 import Foundation
 import SwiftUI
 
@@ -41,6 +12,8 @@ class ModelData: ObservableObject {
     @Published var authViewModel: AuthViewModel
     @Published var ingredientListViewModel: IngredientListViewModel
     @Published var productListViewModel: ProductListViewModel
+    @Published var dataLoaded: Bool = false
+    
     
     init() {
         authViewModel = createViewModel()
@@ -60,7 +33,9 @@ class ModelData: ObservableObject {
             print("all data loaded!")
             print("ingredientsCount: ", self.ingredientListViewModel.ingredientRepository.ingredients.count)
             print("productsCount: ", self.productListViewModel.productRepository.productsBE.count)
-//            self.productListViewModel.productRepository.productsFE.append(<#T##newElement: ProductFE##ProductFE#>)
+            self.productListViewModel.productRepository.productsFE = convertBEProductsListToFE(BEProducts: self.productListViewModel.productRepository.productsBE, ingredientDict: self.ingredientListViewModel.ingredientRepository.ingredientsDict)
+            self.dataLoaded = true
+           
 
         } else {
             print("data still missing")

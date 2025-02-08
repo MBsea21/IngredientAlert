@@ -12,14 +12,12 @@ struct ContentView: View {
 
     
     var body: some View {
-//        do {
-//            let ingredientsListRendered = modelData.ingredientListViewModel.ingredientRepository.ingredients
-//        }
-        
-//        if modelData.ingredientListViewModel.ingredientRepository.ingredients != [] {
+        if modelData.dataLoaded == true {
             TopNavMenu()
                 .environmentObject(modelData)
-//        }
+        } else {
+            Text("Loading Data......")
+        }
 //        else {
 //            Text("Loading...")
 //        }

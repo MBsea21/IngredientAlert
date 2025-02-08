@@ -9,10 +9,9 @@ import SwiftUI
 
 struct Home : View {
     @EnvironmentObject var modelData: ModelData
-    @State var productsList: [ProductFE]
     @State private var searchText = ""
-    @State private var filtersIsOn: Bool = false
-    @State private var showFlagged: Bool = true
+//    @State private var filtersIsOn: Bool = false
+//    @State private var showFlagged: Bool = true
     @State var filteredProducts: [ProductFE] = []
     @State var productNameDict: [String:ProductFE] = [:]
     
@@ -40,16 +39,10 @@ struct Home : View {
     }
     
     var body: some View {
-        let productNameDict = getProductNameDict(products: productsList)
+        let productNameDict = getProductNameDict(products: modelData.productListViewModel.productRepository.productsFE)
         VStack{
             Section{
                 InputView(text:$searchText, title: "Search", placeholder: "Search for products here...")
-                Toggle("Additional Filters", isOn: $filtersIsOn)
-                if filtersIsOn == true {
-                    Section {
-                        Toggle("Show Flagged", isOn: $showFlagged)
-                    }
-                }
                 Spacer()
             }
             if searchText != "" {
@@ -59,7 +52,7 @@ struct Home : View {
                 }
             } else {
                 Section{
-                    ProductList(productsList: productsList)
+                    ProductList(productsList: modelData.productListViewModel.productRepository.productsFE)
                         .environmentObject(modelData)
                 }
             }
