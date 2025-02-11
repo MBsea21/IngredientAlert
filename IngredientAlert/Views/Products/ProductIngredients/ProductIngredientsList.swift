@@ -14,7 +14,7 @@ struct ProductIngredientsList: View {
     var product : ProductFE
     
     var userFlaggedKey: AttributedString {
-        var result = AttributedString("Pink = userFlagged")
+        var result = AttributedString("Pink = Personal Flagged")
         result.foregroundColor = .pink
         
         return result
@@ -70,36 +70,38 @@ struct ProductIngredientsList: View {
                 IngredientClickableList(flaggedIngredients: flaggedIngredients, userFlaggedIngredients: userFlaggedIngredient, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
                 
             } else {
-                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, userFlaggedIngredients: userFlaggedIngredient, unaddedIngredients: unaddedIngredients)
+                ScrollView{
+                    ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, userFlaggedIngredients: userFlaggedIngredient, unaddedIngredients: unaddedIngredients)
+                }
             }
             Section{
-                if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                if !userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
-                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                } else if !userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + flaggedKey + " | " + unflaggedKey )
-                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                } else if !userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + flaggedKey + " | " + unanalizedKey )
-                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                } else if !userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + unflaggedKey + " | " + unanalizedKey )
-                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                } else if !userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + unanalizedKey)
-                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                } else if !userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + unflaggedKey)
-                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
+                } else if !userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty {
                     Text(userFlaggedKey + " | " + flaggedKey)
-                }else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                }else if userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty {
                     Text( flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
-                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                } else if userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty  && unaddedIngredients.isEmpty {
                     Text(flaggedKey + " | " + unflaggedKey )
-                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                } else if userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text( flaggedKey + " | " + unanalizedKey )
-                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                } else if userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text( unflaggedKey + " | " + unanalizedKey )
-                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                } else if userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && !unaddedIngredients.isEmpty {
                     Text(unanalizedKey)
-                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                } else if userFlaggedIngredient.isEmpty && flaggedIngredients.isEmpty && !unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty {
                     Text(unflaggedKey)
-                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
+                } else if userFlaggedIngredient.isEmpty && !flaggedIngredients.isEmpty && unflaggedIngredients.isEmpty && unaddedIngredients.isEmpty{
                     Text(flaggedKey)
                 }
             }.font(.footnote)

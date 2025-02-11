@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ProductIngredientRow: View {
     var ingredient: Ingredient
+//    var userFlaggedList: [Ingredient]
     
     var body: some View {
-        
         if ingredient.isFlagged {
             if ingredient.isCommonName {
                 Text(ingredient.commonName)
@@ -21,7 +21,7 @@ struct ProductIngredientRow: View {
                 Text("\(ingredient.commonName)*")
                     .foregroundColor(.red)
             }
-        }else {
+        } else {
             if ingredient.isCommonName {
                 Text(ingredient.commonName)
             }
@@ -32,10 +32,3 @@ struct ProductIngredientRow: View {
     }
 }
 
-
-//#Preview{
-//    let ingredients = ModelData().ingredients
-//    return Group{
-//        IngredientRow(ingredient: ingredients[0])
-//    }
-//}

@@ -12,10 +12,8 @@ import SwiftData
 struct ProductDetail: View {
     @EnvironmentObject var modelData: ModelData
     var product: ProductFE
-//    var productIndex: Int{
-//        modelData.products.firstIndex(where: {$0.id == product.id })!
-//    }
-//
+
+
 
     var body: some View {
         Divider()
@@ -32,22 +30,31 @@ struct ProductDetail: View {
                     .fixedSize(horizontal: false, vertical: false)
                     .frame(width:200)
                 
-                Text(product.brand)
+                Text("Brand | \(product.brand)")
                     .font(.subheadline)
-                Text(product.use)
+                Text("Use | \(product.use)")
                     .font(.subheadline)
-                Text(product.useArea)
+                Text("Use Area | \(product.useArea)")
                     .font(.subheadline)
-                Text("\(product.isFlagged)")
+                
                 
                 
             }.multilineTextAlignment(.center)
         }
-        
         if product.isFlagged {
-            Text("This product has been flagged for containing skin irritating ingredients!")
+            if !product.userFlaggedIngredients.isEmpty {
+                Text("This product has been flagged for containing skin irritating ingredients!")
+                    .padding(.bottom)
+                    .foregroundColor(.red)
+            } else {
+                Text("This product contains both personal and IngredientAlert flagged ingredients!")
+                    .padding(.bottom)
+                    .foregroundColor(.red)
+            }
+        }else if !product.userFlaggedIngredients.isEmpty {
+            Text("This product contains personal flagged Ingredients")
                 .padding(.bottom)
-                .foregroundColor(.red)
+                .foregroundColor(.pink)
         }
         Divider()
         Section {

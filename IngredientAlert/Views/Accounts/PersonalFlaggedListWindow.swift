@@ -16,7 +16,6 @@ struct PersonalFlaggedListWindow: View {
     var flaggedList: [Ingredient]
     
     private func getCommonNameList (flaggedList: [Ingredient]) -> [Ingredient] {
-        currentPage = 0
         return flaggedList.filter{ $0.isCommonName == true}
         
     }

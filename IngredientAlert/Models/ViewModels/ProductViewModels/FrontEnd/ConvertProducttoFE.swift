@@ -24,9 +24,9 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
             if userFlaggedDict[ingredientData.inputName] != nil {
                 userFlaggedIngredients.append(ingredientData)
             }
-            else if ingredientData.isFlagged == true {
-                flaggedIngredients.append(ingredientData)
-            } else{
+            if ingredientData.isFlagged == true {
+                    flaggedIngredients.append(ingredientData)
+            } else {
                 unflaggedIngredients.append(ingredientData)
             }
         } else {

@@ -36,7 +36,7 @@ class ProductRepository: ObservableObject {
                 NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
             }
     }
-    func addProduct(name: String, brand: String, use:String, useArea: String, uploaderId: String, inputProductIngredients: [String]) -> Bool {
+    func addProduct(name: String, brand: String, use:String, useArea: String, uploaderId: String, inputProductIngredients: [String])  async throws{
         do {
             let newProductReference = store.collection(path).document()
             let newProductId = newProductReference.documentID
@@ -56,7 +56,6 @@ class ProductRepository: ObservableObject {
         } catch {
             fatalError("DEBUG: unable to add Product: \(error.localizedDescription)")
         }
-        return true
     }
     
     func update(_ product: ProductBE) {

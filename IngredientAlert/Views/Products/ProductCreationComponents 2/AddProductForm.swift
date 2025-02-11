@@ -15,6 +15,7 @@ struct AddProductForm: View {
     @State private var productIngredientsInput = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var modelData: ModelData
+    @State private var isLoading: Bool = false
     
     var body: some View {
         ZStack {
@@ -52,38 +53,49 @@ struct AddProductForm: View {
                             )
                             .autocorrectionDisabled(true)
                             
-                            Button{
-                                Task {
-                                    addProduct()
+                            if isLoading == true {
+                                ProgressView("Adding product to database.....")
+                                    .padding()
+                            } else {
+                                Button{
+                                    Task {
+                                        await
+                                        addProduct()
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("Add Product")
+                                            .fontWeight(.semibold)
+                                        Image(systemName: "arrow.right")
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(width: 350, height: 48)
                                 }
-                            } label: {
-                                HStack {
-                                    Text("Add Product")
-                                        .fontWeight(.semibold)
-                                    Image(systemName: "arrow.right")
-                                }
-                                .foregroundColor(.white)
-                                .frame(width: 350, height: 48)
+                                .disabled(!formIsValid)
+                                .opacity(formIsValid ? 1.0 : 0.5)
+                                .background(Color(.systemBlue))
+                                .cornerRadius(10)
+                                .padding(.top, 24)
+                                
+                                
                             }
-                            .disabled(!formIsValid)
-                            .opacity(formIsValid ? 1.0 : 0.5)
-                            .background(Color(.systemBlue))
-                            .cornerRadius(10)
-                            .padding(.top, 24)
-                            
-                            
                         }
+                        .padding(.horizontal)
+                        .padding(.top, 12)
+                        
+                        
+                        // signin button
+                        
+                        
                     }
+                    
                 }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                
-                
-                // signin button
-               
-                
+                if isLoading{
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                }
             }
-            
         }
         
     }
@@ -91,12 +103,12 @@ struct AddProductForm: View {
         let lowercaseIngredients = productIngredients.lowercased()
         let spacesRemovedIngredients = lowercaseIngredients.replacingOccurrences(of: " ", with: "")
         let ingredientsStringList : [String] = spacesRemovedIngredients.components(separatedBy: ",")
-
+        
         return ingredientsStringList
     }
-
-
-
+    
+    
+    
     
     private func findIngredientIds (ingredients:[Ingredient],  productIngredients: String) -> [String] {
         let productIngredientsStringList = splitProductIngredientInput(productIngredients)
@@ -113,22 +125,43 @@ struct AddProductForm: View {
     }
     
     
-    private func addProduct () {
+    private func addProduct () async {
+        guard !isLoading else { return }
+        
+        DispatchQueue.main.async {
+            isLoading = true
+        }
+        
         let currentUser = modelData.authViewModel.currentUser
         let currentUserId = currentUser?.id
         let productIngredientsStrings = splitProductIngredientInput(productIngredientsInput)
-//        let productIngredientIds = findIngredientIds(ingredients:modelData.ingredientListViewModel.ingredientRepository.ingredients, productIngredients: productIngredientsInput)
-        modelData.productListViewModel.addProduct(name:name,
-                                                  brand: brand,
-                                                  use: use,
-                                                  useArea: useArea,
-                                                  inputProductIngredients: productIngredientsStrings,
-                                                  uploaderId: currentUserId!
+        //        let productIngredientIds = findIngredientIds(ingredients:modelData.ingredientListViewModel.ingredientRepository.ingredients, productIngredients: productIngredientsInput)
+        do {
+            try await modelData.productListViewModel.addProduct(name:name,
+                                                                brand: brand,
+                                                                use: use,
+                                                                useArea: useArea,
+                                                                inputProductIngredients: productIngredientsStrings,
+                                                                uploaderId: currentUserId!
             )
-        dismiss()
+            
+            isLoading = false
+            name = ""
+            brand = ""
+            use = ""
+            useArea = ""
+            productIngredientsInput = ""
+            dismiss()
+        } catch {
+            print("Failed to add product \(error.localizedDescription)")
+            await MainActor.run {
+            }
+            
+            
+        }
+        
     }
 }
-
 
 // MARK: AuthenticationFormProtocol
 

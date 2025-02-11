@@ -12,10 +12,7 @@ import SwiftUI
 struct ProductIngredientDetail: View {
     @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
-    
-//    var ingredientIndex: Int{
-//        modelData.ingredients.firstIndex(where: {$0.id == ingredient.id })!
-//    }
+
     
 
     var body: some View {

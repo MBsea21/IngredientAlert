@@ -25,8 +25,8 @@ class ProductListViewModel: ObservableObject {
         .assign(to:\.productViewModels, on: self)
         .store(in: &cancellables)
     }
-    func addProduct(name: String, brand : String, use: String, useArea: String, inputProductIngredients: [String], uploaderId: String) {
-        let productAddedtoBE = productRepository.addProduct(name: name,
+    func addProduct(name: String, brand : String, use: String, useArea: String, inputProductIngredients: [String], uploaderId: String) async throws {
+        try await productRepository.addProduct(name: name,
                                                             brand: brand,
                                                             use: use,
                                                             useArea: useArea,
@@ -34,10 +34,6 @@ class ProductListViewModel: ObservableObject {
                                                             inputProductIngredients: inputProductIngredients
                                                             
                                      )
-        if productAddedtoBE == true {
-            print("Succesfully added product to backend")
-        } else {
-            print("did not add product to backend due to error")
         }
     }
-}
+

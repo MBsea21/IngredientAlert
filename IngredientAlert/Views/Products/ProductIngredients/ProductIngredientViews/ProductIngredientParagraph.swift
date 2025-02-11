@@ -22,7 +22,7 @@ struct ProductIngredientParagraph: View {
     }
     var userFlagged: AttributedString {
         var result = AttributedString(ingredientParagraphFunction(userFlaggedIngredients))
-        result.foregroundColor = .pink
+        result.foregroundColor = .orange
         return result
     }
     var flagged: AttributedString{
@@ -89,10 +89,3 @@ struct ProductIngredientParagraph: View {
 }
     
 
-//#Preview {
-//    let modelData = ModelData()
-//    let flaggedIngredients = [modelData.ingredients[0]]
-//    let unflaggedIngredients = [modelData.ingredients[5]]
-//    let userflaggedIngredients = [modelData.ingredients[1]]
-//    ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, userFlaggedIngredients: userflaggedIngredients, unflaggedIngredients: unflaggedIngredients)
-//}

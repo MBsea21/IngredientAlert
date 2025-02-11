@@ -21,28 +21,31 @@ class ModelData: ObservableObject {
         self.ingredientListViewModel = ingredientListViewModel
         let productListViewModel = createProductListViewModel()
         self.productListViewModel = productListViewModel
-        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name:
             NSNotification.Name("ingredientAlert.userDataLoaded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ingredientsProductsLoadedHandler(notification:)), name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
+        
     }
     
     @objc func ingredientsProductsLoadedHandler(notification: NSNotification) {
         print("handler called")
         
-        if (!self.ingredientListViewModel.ingredientRepository.ingredients.isEmpty &&
+        if
+            (!self.ingredientListViewModel.ingredientRepository.ingredients.isEmpty &&
             !self.productListViewModel.productRepository.productsBE.isEmpty
             ){
             print("all data loaded!")
             print("ingredientsCount: ", self.ingredientListViewModel.ingredientRepository.ingredients.count)
             print("productsCount: ", self.productListViewModel.productRepository.productsBE.count)
             print("user data is loaded")
-            self.productListViewModel.productRepository.productsFE = convertBEProductsListToFE(BEProducts: self.productListViewModel.productRepository.productsBE, ingredientDict: self.ingredientListViewModel.ingredientRepository.ingredientsDict, userFlaggedDict: authViewModel.currentUserFlaggedDict)
-            self.dataLoaded = true
-            
             if self.authViewModel.currentUser != nil {
                 self.authViewModel.currentUserFlaggedDict = self.authViewModel.getCurrentFlaggedDict(flaggedListId: self.authViewModel.currentUser!.flaggedListId, ingredientsList: self.ingredientListViewModel.ingredientRepository.ingredients)
             }
+
+            self.productListViewModel.productRepository.productsFE = convertBEProductsListToFE(BEProducts: self.productListViewModel.productRepository.productsBE, ingredientDict: self.ingredientListViewModel.ingredientRepository.ingredientsDict, userFlaggedDict: authViewModel.currentUserFlaggedDict)
+            self.dataLoaded = true
+            
 
         } else {
             print("data still missing")
