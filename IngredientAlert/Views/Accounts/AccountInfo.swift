@@ -12,22 +12,19 @@ struct AccountInfo: View {
     //    @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var modelData: ModelData
     @Binding var isLoggedIn: Bool
+    @State private var viewFlaggedList: Bool = false
+//    @State private var showAllNames: Bool = false
+//    @State private var showRemoveFlaggedIngredientAlert: Bool = false
+    
+    private func getFlaggedListInfo(dict: [String: Ingredient]) -> [Ingredient] {
+        var ingArr: [Ingredient] = []
+        for (ingredientName, ingredientData) in dict {
+            ingArr.append(ingredientData)
+        }
+        return ingArr
+}
     
     var body: some View {
-        //        VStack{
-        //            Text("account view")
-        //            if let user =  modelData.authViewModel.currentUser {
-        //                Text("user is open")
-        //                Text(user.fullname)
-        //
-        //                    .foregroundColor(.black)
-        //            }
-        //            Spacer()
-        
-        //        }
-        //    }
-        
-    
         if let user = modelData.authViewModel.currentUser {
             ScrollView{
                 VStack(alignment:.leading, spacing: 24){
@@ -61,45 +58,63 @@ struct AccountInfo: View {
                                 .foregroundColor(.bGrayGreen)
                         }
                     }
-                    Section("Account"){
-                        Button {
-                            Task{
-                                modelData.authViewModel.signOut()
-                                if modelData.authViewModel.userSession == nil {
-                                    isLoggedIn = false
-                                }
-                            }
-                        } label: {
-                            SettingsRowView(imageName:"arrow.left.circle.fill",
-                                            title:"Sign Out",
-                                            tintColor: Color(.red))
-                        }
-                    }
-                    Button {
-                        Task {
-                            modelData.authViewModel.deleteAccount()
-                            
-                            if modelData.authViewModel.userSession == nil {
-                                isLoggedIn = false
-                            }
-                        }
-                        //                            authViewModel.deleteAccount()
+                    Section("Account") {
+                        Toggle("Personal Flagged List", isOn: $viewFlaggedList)
                         
-                    } label: {
-                        SettingsRowView(imageName:"xmark.circle.fill",
-                                        title:"Delete Account",
-                                        tintColor:Color(.red))
+                        if viewFlaggedList == true {
+                            let flaggedList = getFlaggedListInfo(dict: modelData.authViewModel.currentUserFlaggedDict)
+                            PersonalFlaggedListWindow(flaggedList: flaggedList)
+                                .environmentObject(modelData)
+                            }
+    
+                        
+                            HStack {
+                                Button {
+                                    Task{
+                                        modelData.authViewModel.signOut()
+                                        if modelData.authViewModel.userSession == nil {
+                                            isLoggedIn = false
+                                        }
+                                    }
+                                } label: {
+                                    SettingsRowView(imageName:"arrow.left.circle.fill",
+                                                title:"Sign Out",
+                                                tintColor: Color(.red))
+                                }
+                                Spacer()
+                            
+                                Button {
+                                    Task {
+                                        modelData.authViewModel.deleteAccount()
+                                    
+                                        if modelData.authViewModel.userSession == nil {
+                                            isLoggedIn = false
+                                        }
+                                    }
+                                
+                                } label: {
+                                    SettingsRowView(imageName:"xmark.circle.fill",
+                                                    title:"Delete Account",
+                                                    tintColor:Color(.red))
+                            }
+                        }
                     }
-                }
-                .padding()
+                }.padding()
+                
             }
+            
         } else {
             LoginFormView(isLoggedIn: Binding.constant(false))
         }
-  
+        
+        
+        
     }
     
 }
+
+
+
 
 
 struct AccountInfo_Previews: PreviewProvider {

@@ -14,6 +14,9 @@ struct MissingWordToggleView: View {
     @State var pubChemUrl: String = ""
     @State var isFlagged: Bool = false
     @State var isCommon: Bool = false
+    @State var commonName: String = ""
+    @Environment(\.dismiss) var dismiss
+    @State private var isLoading: Bool = false
     
     
     @State private var wordToggle = false
@@ -28,7 +31,9 @@ struct MissingWordToggleView: View {
                 ScrollView{
                     Toggle("Is Common Name", isOn: $isCommon)
                     if isCommon == true {
-                        let commonName = word
+                        var commonName = word
+                    } else {
+                        InputView(text:$commonName, title: "CommonName", placeholder: "common name")
                     }
                     InputView(text:$text, title: "name", placeholder: "string ")
                     InputView(text:$sourceUrl, title: "SourceURL", placeholder:"www.pubMed.com")
@@ -37,13 +42,18 @@ struct MissingWordToggleView: View {
                     
                     Button{
                         Task {
-                            addCommonIngredient()
+                            await addCommonIngredient()
                         }
                     } label: {
                         HStack {
-                            Text("Add Common Ingredient")
-                                .fontWeight(.semibold)
-                            Image(systemName: "arrow.right")
+                            if isLoading == true {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            } else {
+                                Text("Add Common Ingredient")
+                                    .fontWeight(.semibold)
+                                Image(systemName: "arrow.right")
+                            }
                         }
                         .foregroundColor(.white)
                         .frame(width: 350, height: 48)
@@ -55,14 +65,33 @@ struct MissingWordToggleView: View {
             }
         }
     }
-        private func addCommonIngredient () {
-            modelData.ingredientListViewModel.addCommon(inputName: text,
-                                                        commonName: text,
-                                                        isCommonName: true,
-                                                        isFlagged: isFlagged,
-                                                        sourceUrl: sourceUrl,
-                                                        pubChemUrl: pubChemUrl )
+    private func addCommonIngredient () async {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        do {
+            try await modelData.ingredientListViewModel.addCommon(inputName: text,
+                                                                  commonName: commonName,
+                                                                  isCommonName: true,
+                                                                  isFlagged: isFlagged,
+                                                                  sourceUrl: sourceUrl,
+                                                                  pubChemUrl: pubChemUrl )
             wordToggle = false
+            dismiss()
+            
+            //reset fields
+            text = ""
+            sourceUrl = ""
+            pubChemUrl = ""
+            isFlagged = false
+            isCommon = false
+            commonName = ""
+            
+        } catch {
+            print("failed attempt at adding common ingredient\(error.localizedDescription)")
+        }
+                  isLoading = false
+           
     }
                     
 }

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct AddCommonIngredientForm: View {
     @State private var commonName = ""
-    @State private var isFlagged: Bool = true
+    @State private var isFlagged: Bool = false
     @State private var sourceUrl = ""
     @State private var pubChemUrl = ""
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var modelData: ModelData
+    @State private var isLoading: Bool = false
     
     
     var body: some View {
@@ -21,8 +22,6 @@ struct AddCommonIngredientForm: View {
             Section{
                 NavigationStack{
                     ScrollView{
-                        Text("Add Common Ingredient Form")
-                            .font(.title)
                         //form fields
                         VStack(spacing: 24){
                             InputView(text: $commonName,
@@ -30,72 +29,97 @@ struct AddCommonIngredientForm: View {
                                       placeholder: "Calcium")
                             .autocorrectionDisabled(true)
                             
-                            //                    InputView(text: $isFlagged,
-                            //                              title: "Full Name",
-                            //                              placeholder: "Jane Doe")
-                            //                    .autocorrectionDisabled(true)
-                            
                             InputView(text:$sourceUrl,
                                       title:"Source Url",
                                       placeholder: "www.pubmed.com"
                             )
                             .autocorrectionDisabled(true)
                             
-                            ZStack(alignment: .trailing){
-                                InputView(text:$pubChemUrl,
-                                          title:"PubChemUrl",
-                                          placeholder: "www.pubChem.com"
-                                )
-                                .autocorrectionDisabled(true)
+                            
+                            
+                            InputView(text:$pubChemUrl,
+                                      title:"PubChemUrl",
+                                      placeholder: "www.pubChem.com"
+                            )
+                            .autocorrectionDisabled(true)
+                            
+                            
+                            Toggle("Is Flagged", isOn: $isFlagged)
+                            
+                            
+                            if isLoading == true {
+                                ProgressView("Adding Common Ingredent....")
+                                    .padding()
                                 
-                                
+                            } else {
+                                Button{
+                                    Task {
+                                        await addCommonIngredient()
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("Add Common Ingredient")
+                                            .fontWeight(.semibold)
+                                        Image(systemName: "arrow.right")
+                                    }
+                                    .foregroundColor(.white)
+                                    .frame(width: 350, height: 48)
+                                }
+                                .disabled(!formIsValid)
+                                .opacity(formIsValid ? 1.0 : 0.5)
+                                .background(Color(.systemBlue))
+                                .cornerRadius(10)
+                                .padding(.top, 24)
                             }
                         }
+                        .padding(.horizontal)
+                        .padding(.top, 12)
+                        
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                    
-                    
-                    // signin button
-                    Button{
-                        Task {
-                            addCommonIngredient()
-                        }
-                    } label: {
-                        HStack {
-                            Text("Add Common Ingredient")
-                                .fontWeight(.semibold)
-                            Image(systemName: "arrow.right")
-                        }
-                        .foregroundColor(.white)
-                        .frame(width: 350, height: 48)
-                    }
-                    .disabled(!formIsValid)
-                    .opacity(formIsValid ? 1.0 : 0.5)
-                    .background(Color(.systemBlue))
-                    .cornerRadius(10)
-                    .padding(.top, 24)
-                    
                 }
+                if isLoading {
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                }
+            }
+            
+        }
+    }
+    private func addCommonIngredient () async {
+        guard !isLoading else { return }
+        
+        DispatchQueue.main.async {
+            isLoading = true
+        }
+        do {
+        try await modelData.ingredientListViewModel.addCommon(inputName: commonName,
+                                                          commonName: commonName,
+                                                          isCommonName: true,
+                                                          isFlagged: isFlagged,
+                                                          sourceUrl: sourceUrl,
+                                                          pubChemUrl: pubChemUrl
+        )
+            dismiss()
+            
+            isLoading = false
+            commonName = ""
+            isFlagged = false
+            sourceUrl = ""
+            pubChemUrl = ""
+            dismiss()
+            
+        } catch {
+            print("Failed to add ingredient: \(error.localizedDescription)")
+            await MainActor.run {
                 
             }
         }
+        
+        
     }
-        private func addCommonIngredient () {
-            modelData.ingredientListViewModel.addCommon(inputName: commonName,
-                                                        commonName: commonName,
-                                                        isCommonName: true,
-                                                        isFlagged: isFlagged,
-                                                        sourceUrl: sourceUrl,
-                                                        pubChemUrl: pubChemUrl )
-            
-            
-        }
     
 }
-    
-
-
+        
 // MARK: AuthenticationFormProtocol
 extension AddCommonIngredientForm: IngredientAuthenticationFormProtocol {
     var formIsValid: Bool {

@@ -16,17 +16,10 @@ enum AdminPage: String, CaseIterable {
     case Account
     case Help
 }
-enum NonAdminPage : String, CaseIterable { // 1
-    case Home
-    case AddProduct
-    case Ingredients
-    case Account
-    case Help
-}
 
-struct TopNavMenu: View {
+struct AdminTopNavMenu: View {
     @EnvironmentObject var modelData: ModelData
-    @State var selectedPage = NonAdminPage.Home
+    @State var selectedPage = AdminPage.Home
     
     @State var ingredientDict: [String: Ingredient] = [:]
     @State var productsList : [ProductFE] = []
@@ -43,7 +36,7 @@ struct TopNavMenu: View {
                 Spacer()
                 
                 Picker ("Pick a page", selection: $selectedPage) {
-                    ForEach(Page.allCases, id: \.self) {item in
+                    ForEach(AdminPage.allCases, id: \.self) {item in
                         if item.rawValue == "AddProduct" {
                             Text("Add Product")
                         } else {

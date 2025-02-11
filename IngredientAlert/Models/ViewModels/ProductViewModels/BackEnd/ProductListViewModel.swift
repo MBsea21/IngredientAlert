@@ -24,7 +24,6 @@ class ProductListViewModel: ObservableObject {
         }
         .assign(to:\.productViewModels, on: self)
         .store(in: &cancellables)
-        print("line 28 in Product Authentication form protocol complete")
     }
     func addProduct(name: String, brand : String, use: String, useArea: String, inputProductIngredients: [String], uploaderId: String) {
         let productAddedtoBE = productRepository.addProduct(name: name,

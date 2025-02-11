@@ -13,7 +13,9 @@ struct User: Hashable, Codable, Identifiable {
     var fullname: String
     var email: String
     var isAdmin: Bool?
-    //    var personalFlaggedList : [Ingredient]
+    var flaggedListId: [String]
+    
+    
     //    var userAllergens: [Ingredient]
     
     var initials: String{
@@ -24,7 +26,8 @@ struct User: Hashable, Codable, Identifiable {
         }
         return ""
     }
-    static let `default` = User(id:NSUUID().uuidString , fullname: "Anonymous", email: "anonymous", isAdmin: false/*, personalFlaggedList: [], userAllergens: []*/)
+    
+    static let `default` = User(id:NSUUID().uuidString , fullname: "Anonymous", email: "anonymous", isAdmin: false, flaggedListId: [])
 }
 
 

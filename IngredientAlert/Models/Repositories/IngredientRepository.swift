@@ -14,6 +14,7 @@ class IngredientRepository: ObservableObject {
     private let store = Firestore.firestore()
     @Published var ingredients: [Ingredient] = []
     @Published var ingredientsDict: [String: Ingredient] = [:]
+    
     private var cancellables: Set<AnyCancellable> = []
     
     private func setIngredientDict () {
@@ -41,7 +42,7 @@ class IngredientRepository: ObservableObject {
                 self.setIngredientDict()
             }
     }
-    func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) {
+    func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) async throws {
         do {
             let newCommonReference = store.collection(path).document()
             let newCommonIngredientId = newCommonReference.documentID
@@ -100,7 +101,7 @@ class IngredientRepository: ObservableObject {
                 fatalError("DEBUG: unable to add product ingredient \(newProductIngredientId) to ingredient list: \(error.localizedDescription)")
             }
         }
-            
+        
     }
     
     func update(_ ingredient: Ingredient) {
@@ -120,4 +121,33 @@ class IngredientRepository: ObservableObject {
             }
         }
     }
+    func batchIngredientAdd( nameList: [String], commonName: String, commonNameId: String, sourceUrl: String, pubChemUrl: String, isFlagged: Bool) async throws{
+        let batch = store.batch()
+        for name in nameList {
+            let newOtherNameReference = store.collection("ingredients").document()
+            let newOtherNameIngredientId = newOtherNameReference.documentID
+            let newOtherNameIngredient = Ingredient(id: newOtherNameIngredientId,
+                                                    inputName: name.lowercased(),
+                                                    commonName: commonName.lowercased(),
+                                                    isCommonName: false,
+                                                    commonNameId: commonNameId,
+                                                    isFlagged: isFlagged,
+                                                    sourceUrl: sourceUrl,
+                                                    pubChemUrl: pubChemUrl)
+            do {
+                try batch.setData(from: newOtherNameIngredient, forDocument: newOtherNameReference)
+            } catch {
+                print("Error adding ingredient to batch: \(error.localizedDescription)")
+                throw error
+            }
+        }
+        do {
+            try await batch.commit()
+            print("Batch write succeded!")
+        } catch {
+            print("Batch write failed: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
 }

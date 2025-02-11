@@ -10,9 +10,7 @@ import Foundation
 enum Page : String, CaseIterable { // 1
     case Home
     case AddProduct
-    case Products
     case Ingredients
-    case Admin
     case Account
     case Help
 }
@@ -20,6 +18,7 @@ enum Page : String, CaseIterable { // 1
 struct TopNavMenu: View {
     @EnvironmentObject var modelData: ModelData
     @State var selectedPage = Page.Home
+    
     @State var ingredientDict: [String: Ingredient] = [:]
     @State var productsList : [ProductFE] = []
 

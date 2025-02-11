@@ -24,10 +24,10 @@ class IngredientListViewModel: ObservableObject {
         }
         .assign(to:\.ingredientViewModels, on: self)
         .store(in: &cancellables)
-        print("line 28 in ingredientauthenticationformprotocol complete")
+
     }
-    func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) {
-        ingredientRepository.addCommon(inputName: inputName,
+    func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) async throws {
+        try await ingredientRepository.addCommon(inputName: inputName,
                                        commonName: commonName,
                                        isCommonName: true,
                                        isFlagged: isFlagged,

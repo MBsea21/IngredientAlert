@@ -23,16 +23,17 @@ struct AddMissingIngredientsForm: View {
                 }
             }
         }
-        return missingIngredientsList
+        let missingIngSet = Set(missingIngredientsList)
+        return Array(missingIngSet)
     }
     var body: some View {
-        var missingIngredientsList = getMissingIngredientsList(productList: productList)
+        let missingIngredientsList = getMissingIngredientsList(productList: productList)
         Section{
             ForEach(missingIngredientsList, id: \.self) { ingredient in
                 MissingWordToggleView(word: ingredient)
                     .environmentObject(modelData)
                 
-            }
+            } 
         }
         
     }

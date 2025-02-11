@@ -16,17 +16,12 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
     var unaddedIngredients: [String] = []
     var isFlagged: Bool? = true
     
-    // find product ingredients
-    print("BE Input Products: \(BEProduct.inputProductIngredients)")
-    print("Ingredient Dictionary \(ingredientDict)")
     for ingredientString in BEProduct.inputProductIngredients {
-        print("ingredientString: \(ingredientString)")
         if let ingredientData = ingredientDict[ingredientString] {
-            print("Ingredient Data: \(ingredientData)")
             if ingredientData.isFlagged == true {
                 flaggedIngredients.append(ingredientData)
             } else {
-                print("Ingredient not found in dictionary")
+//                print("Ingredient not found in dictionary")
                 unflaggedIngredients.append(ingredientData)
             }
         } else {
@@ -40,7 +35,6 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
         } else {
             isFlagged = false
         }
-     print("line 39: flagged ingredients \(flaggedIngredients)")
 
         let productInstance = ProductFE(id: FEID,
                                         name: name,

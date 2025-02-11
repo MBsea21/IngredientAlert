@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct RemovePersonalFlaggedIngredientButtons {
+struct RemovePersonalFlaggedIngredientButtons: View {
     @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
     @State private var showRemoveFlaggedIngredientAlert: Bool = false
@@ -20,13 +20,15 @@ struct RemovePersonalFlaggedIngredientButtons {
                         Button("Remove all associated names") {
                             Task {
                                 await modelData.authViewModel.removeCommonFromFlagged(ingredient)
-                            }
-                            Button("Remove only this name", role:.destructive)
-                            Task {
-                                await modelData.authViewModel.removeSingleInstanceFromFlagged(ingredient)
+                                await modelData.authViewModel.fetchUser()
                             }
                         }
-                        
+                            Button("Remove only this name", role:.destructive) {
+                            Task {
+                                await modelData.authViewModel.removeSingleInstanceFromFlagged(ingredient)
+                                await modelData.authViewModel.fetchUser()
+                            }
+                        }
                         Button("No", role: .cancel) {}
                         
                     }

@@ -22,11 +22,20 @@ struct PersonalFlaggedListWindow: View {
         return filteredList
     }
     var body: some View {
+        if flaggedList.count == 0 {
+            Text("No flagged ingredients")
+        }
         Toggle("Show All Names", isOn: $showAllNames)
         if showAllNames == false {
             let commonNameList = getCommonNameList(flaggedList: flaggedList)
-            PersonalFlaggedList(flaggedList: commonNameList)
-                .environmentObject(modelData)
+            if commonNameList.count == 0 {
+                PersonalFlaggedList(flaggedList: flaggedList)
+            } else {
+                PersonalFlaggedList(flaggedList: commonNameList)
+                    .environmentObject(modelData)
+            }
+            
+            
         } else {
             PersonalFlaggedList(flaggedList:flaggedList)
                 .environmentObject(modelData)

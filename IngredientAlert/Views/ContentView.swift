@@ -13,9 +13,27 @@ struct ContentView: View {
     
     var body: some View {
         if modelData.dataLoaded == true {
-            TopNavMenu()
-                .environmentObject(modelData)
+            if modelData.authViewModel.userSession != nil {
+                
+                if modelData.authViewModel.currentUser?.isAdmin == true {
+                    AdminTopNavMenu()
+                        .environmentObject(modelData)
+                }
+                else {
+                    TopNavMenu()
+                        .environmentObject(modelData)
+                }
+            } else {
+                Account(isLoggedIn: false)
+                    .environmentObject(modelData)
+            }
+            
         } else {
+            Image(.iconLogoSquare)
+                .resizable()
+                .frame(width: 300, height: 300)
+            
+                
             Text("Loading Data......")
         }
 //        else {

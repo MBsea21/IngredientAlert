@@ -15,14 +15,7 @@ struct Home : View {
     @State var filteredProducts: [ProductFE] = []
     @State var productNameDict: [String:ProductFE] = [:]
     
-    
-    private func getProductNameDict(products: [ProductFE]) -> [String: ProductFE] {
-        var dict: [String: ProductFE] = [:]
-        for product in products {
-            dict[product.name] = product
-        }
-        return dict
-    }
+
     
     //private func getProductBrandsDict(products: [ProductFE] -> [String: [ProductFE])
     private func textSearchProducts(textinput:String, productNameDict: [String: ProductFE]) -> [ProductFE] {
@@ -39,7 +32,6 @@ struct Home : View {
     }
     
     var body: some View {
-        let productNameDict = getProductNameDict(products: modelData.productListViewModel.productRepository.productsFE)
         VStack{
             Section{
                 InputView(text:$searchText, title: "Search", placeholder: "Search for products here...")

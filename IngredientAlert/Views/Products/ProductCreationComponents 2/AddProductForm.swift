@@ -91,7 +91,7 @@ struct AddProductForm: View {
         let lowercaseIngredients = productIngredients.lowercased()
         let spacesRemovedIngredients = lowercaseIngredients.replacingOccurrences(of: " ", with: "")
         let ingredientsStringList : [String] = spacesRemovedIngredients.components(separatedBy: ",")
-        print("line 81 met for splitting ingredients, \(ingredientsStringList)")
+
         return ingredientsStringList
     }
 
@@ -106,10 +106,6 @@ struct AddProductForm: View {
                 if ingredient.inputName == productIngredient {
                     let ingredientId = ingredient.id
                     productIngredientIds.append(ingredientId!)
-                } else {
-                    print("new ingredient needs to be created \(ingredient)")
-//                    let newIngredientId = modelData.ingredientListViewModel.addProductIngredient(inputName: productIngredient)
-//                    productIngredientIds.append(newIngredientId)
                 }
             }
         }
@@ -129,7 +125,7 @@ struct AddProductForm: View {
                                                   inputProductIngredients: productIngredientsStrings,
                                                   uploaderId: currentUserId!
             )
-        
+        dismiss()
     }
 }
 

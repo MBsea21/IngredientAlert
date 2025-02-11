@@ -16,6 +16,7 @@ protocol AuthenticationFormProtocol {
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var currentUserFlaggedDict: [String: Ingredient] = [:]
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -45,7 +46,7 @@ class AuthViewModel: ObservableObject {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid, fullname: fullname, email: email, isAdmin: false/*, personalFlaggedList: []*/)
+            let user = User(id: result.user.uid, fullname: fullname, email: email, isAdmin: false, flaggedListId: [])
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
             await fetchUser()
@@ -53,7 +54,7 @@ class AuthViewModel: ObservableObject {
             print("Debug: failed to create user with error \(error.localizedDescription)")
         }
     }
-
+    
     
     func signOut() {
         do {
@@ -71,7 +72,7 @@ class AuthViewModel: ObservableObject {
     func deleteAccount() {
         do {
             let user = Auth.auth().currentUser
-
+            
             user?.delete { error in
                 if let error = error {
                     print("ann error happened\(error)")
@@ -93,6 +94,100 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
-        print("Debug: current user is \(self.currentUser!)")
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.userDataLoaded"), object: nil)
+        }
     }
-}
+
+    func addAllNamesFlagged(_ ingredient: Ingredient, ingredientList: [Ingredient]) async{
+        await self.fetchUser()
+        let currentUser = self.currentUser!
+        var flaggedList = self.currentUser!.flaggedListId
+        
+        for ingredientData in ingredientList {
+            if ingredientData.commonName == ingredient.commonName {
+                let ingredientDataId = ingredientData.id!
+                if !flaggedList.contains(ingredientDataId) {
+                    flaggedList.append(ingredientDataId)
+                }
+                let user = User(id: currentUser.id, fullname: currentUser.fullname, email: currentUser.email, isAdmin: currentUser.isAdmin, flaggedListId: flaggedList)
+                do {
+                    try Firestore.firestore().collection("users").document(user.id).setData(from: user)
+                } catch {
+                    fatalError("DEBUG: unable to update user flagged list: \(error.localizedDescription)")
+                }
+                
+            }
+        }
+    }
+    func addSingleFlagged(_ ingredient: Ingredient, ingredientList: [Ingredient]) async{
+        await self.fetchUser()
+        let currentUser = self.currentUser!
+        var flaggedList = self.currentUser!.flaggedListId
+        
+        for ingredientData in ingredientList {
+            if ingredientData.inputName == ingredient.inputName {
+                let ingredientDataId = ingredientData.id!
+                if !flaggedList.contains(ingredientDataId) {
+                    flaggedList.append(ingredientDataId)
+                }
+                let user = User(id: currentUser.id, fullname: currentUser.fullname, email: currentUser.email, isAdmin: currentUser.isAdmin, flaggedListId: flaggedList)
+                do {
+                    try Firestore.firestore().collection("users").document(user.id).setData(from: user)
+                } catch {
+                    fatalError("DEBUG: unable to update user flagged list: \(error.localizedDescription)")
+                }
+                
+            }
+        }
+    }
+    func removeCommonFromFlagged (_ removedIngredient: Ingredient) async {
+        await self.fetchUser()
+        let currentUser = self.currentUser!
+        var newFlaggedList: [String] = []
+        
+        for (ingredientName, ingredientData) in self.currentUserFlaggedDict {
+            if ingredientName != removedIngredient.inputName {
+                self.currentUserFlaggedDict.removeValue(forKey: ingredientName)
+                if ingredientData.commonName != removedIngredient.commonName {
+                    self.currentUserFlaggedDict.removeValue(forKey: ingredientData.inputName)
+                    let ingredientId = ingredientData.id
+                    newFlaggedList.append(ingredientData.id!)
+                }
+            }
+        }
+        let user = User(id: currentUser.id, fullname: currentUser.fullname, email: currentUser.email, isAdmin: currentUser.isAdmin, flaggedListId: newFlaggedList)
+        do {
+            try Firestore.firestore().collection("users").document(user.id).setData(from: user)
+        } catch {
+            fatalError("DEBUG: unable to remove instances from user flagged list: \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func removeSingleInstanceFromFlagged (_ removedIngredient: Ingredient) async {
+        await self.fetchUser()
+        let currentUser = self.currentUser!
+        let removedIngredientId = removedIngredient.id!
+        self.currentUserFlaggedDict.removeValue(forKey: removedIngredient.inputName)
+        let newFlaggedList: [String] = (self.currentUser?.flaggedListId.filter{ $0 != removedIngredientId })!
+        let user = User(id: currentUser.id, fullname: currentUser.fullname, email: currentUser.email, isAdmin: currentUser.isAdmin, flaggedListId: newFlaggedList)
+        do {
+            try Firestore.firestore().collection("users").document(user.id).setData(from: user)
+        } catch {
+            fatalError("DEBUG: unable to remove instance from user flagged list: \(error.localizedDescription)")
+        }
+        
+    }
+    func getCurrentFlaggedDict(flaggedListId: [String], ingredientsList: [Ingredient]) -> [String: Ingredient] {
+        var flaggedDict:[String: Ingredient] = [:]
+        for ingredient in ingredientsList {
+            if flaggedListId.contains(ingredient.id!) {
+                   flaggedDict[ingredient.inputName] = ingredient
+                }
+            }
+        return flaggedDict
+        }
+    }
+
+
