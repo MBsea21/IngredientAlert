@@ -37,7 +37,7 @@ class ModelData: ObservableObject {
             print("ingredientsCount: ", self.ingredientListViewModel.ingredientRepository.ingredients.count)
             print("productsCount: ", self.productListViewModel.productRepository.productsBE.count)
             print("user data is loaded")
-            self.productListViewModel.productRepository.productsFE = convertBEProductsListToFE(BEProducts: self.productListViewModel.productRepository.productsBE, ingredientDict: self.ingredientListViewModel.ingredientRepository.ingredientsDict)
+            self.productListViewModel.productRepository.productsFE = convertBEProductsListToFE(BEProducts: self.productListViewModel.productRepository.productsBE, ingredientDict: self.ingredientListViewModel.ingredientRepository.ingredientsDict, userFlaggedDict: authViewModel.currentUserFlaggedDict)
             self.dataLoaded = true
             
             if self.authViewModel.currentUser != nil {

@@ -4,7 +4,7 @@
 //
 //  Created by Madeline Bennett on 2/4/25.
 //
-func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String: Ingredient]) -> ProductFE {
+func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String: Ingredient], userFlaggedDict: [String: Ingredient]) -> ProductFE {
     let FEID = BEProduct.id
     let name = BEProduct.name
     let brand = BEProduct.brand
@@ -13,15 +13,20 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
     let uploaderId = BEProduct.uploaderId
     var flaggedIngredients: [Ingredient] = []
     var unflaggedIngredients: [Ingredient] = []
+    var userFlaggedIngredients: [Ingredient] = []
     var unaddedIngredients: [String] = []
     var isFlagged: Bool? = true
     
+    
     for ingredientString in BEProduct.inputProductIngredients {
+        
         if let ingredientData = ingredientDict[ingredientString] {
-            if ingredientData.isFlagged == true {
+            if userFlaggedDict[ingredientData.inputName] != nil {
+                userFlaggedIngredients.append(ingredientData)
+            }
+            else if ingredientData.isFlagged == true {
                 flaggedIngredients.append(ingredientData)
-            } else {
-//                print("Ingredient not found in dictionary")
+            } else{
                 unflaggedIngredients.append(ingredientData)
             }
         } else {
@@ -44,6 +49,7 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
                                         productIngredients: BEProduct.inputProductIngredients,
                                         flaggedIngredients: flaggedIngredients,
                                         unflaggedIngredients: unflaggedIngredients,
+                                        userFlaggedIngredients: userFlaggedIngredients,
                                         unaddedIngredients: unaddedIngredients ,
                                         isFlagged: isFlagged!,
                                         uploaderId: uploaderId)
@@ -52,10 +58,10 @@ func convertBEProductToFEProduct (BEProduct: ProductBE, ingredientDict: [String:
     }
     
 
-    func convertBEProductsListToFE (BEProducts: [ProductBE], ingredientDict:[String: Ingredient]) -> [ProductFE] {
+func convertBEProductsListToFE (BEProducts: [ProductBE], ingredientDict:[String: Ingredient], userFlaggedDict: [String: Ingredient]) -> [ProductFE] {
         var FEProducts: [ProductFE] = []
         for product in BEProducts {
-            let productInstance = convertBEProductToFEProduct(BEProduct: product, ingredientDict: ingredientDict)
+            let productInstance = convertBEProductToFEProduct(BEProduct: product, ingredientDict: ingredientDict, userFlaggedDict: userFlaggedDict)
             FEProducts.append(productInstance)
         }
         return FEProducts

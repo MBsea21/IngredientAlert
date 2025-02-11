@@ -13,6 +13,13 @@ struct ProductIngredientsList: View {
     @State var showIngredientDetails : Bool = false
     var product : ProductFE
     
+    var userFlaggedKey: AttributedString {
+        var result = AttributedString("Pink = userFlagged")
+        result.foregroundColor = .pink
+        
+        return result
+    }
+    
     var flaggedKey: AttributedString{
         var result = AttributedString("red = flagged")
         result.foregroundColor = .red
@@ -32,6 +39,7 @@ struct ProductIngredientsList: View {
     }
     
     var body: some View {
+        let userFlaggedIngredient = product.userFlaggedIngredients
         let flaggedIngredients = product.flaggedIngredients
         let unflaggedIngredients = product.unflaggedIngredients
         let unaddedIngredients = product.unaddedIngredients
@@ -59,25 +67,39 @@ struct ProductIngredientsList: View {
         }
         Section{
             if showIngredientDetails {
-                IngredientClickableList(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
+                IngredientClickableList(flaggedIngredients: flaggedIngredients, userFlaggedIngredients: userFlaggedIngredient, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
                 
             } else {
-                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, unaddedIngredients: unaddedIngredients)
+                ProductIngredientParagraph(flaggedIngredients: flaggedIngredients, unflaggedIngredients: unflaggedIngredients, userFlaggedIngredients: userFlaggedIngredient, unaddedIngredients: unaddedIngredients)
             }
             Section{
-                if flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
-                    Text(flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
-                } else if flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text(userFlaggedKey + " | " + flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
+                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                    Text(userFlaggedKey + " | " + flaggedKey + " | " + unflaggedKey )
+                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                    Text(userFlaggedKey + " | " + flaggedKey + " | " + unanalizedKey )
+                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text(userFlaggedKey + " | " + unflaggedKey + " | " + unanalizedKey )
+                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                    Text(userFlaggedKey + " | " + unanalizedKey)
+                } else if userFlaggedIngredient != [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                    Text(userFlaggedKey + " | " + unflaggedKey)
+                } else if userFlaggedIngredient != [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
+                    Text(userFlaggedKey + " | " + flaggedKey)
+                }else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text( flaggedKey + " | " + unflaggedKey + " | " + unanalizedKey)
+                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients != [] && unaddedIngredients == [] {
                     Text(flaggedKey + " | " + unflaggedKey )
-                } else if flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
-                    Text(flaggedKey + " | " + unanalizedKey )
-                } else if flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
-                    Text(unflaggedKey + " | " + unanalizedKey )
-                } else if flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients != [] {
+                    Text( flaggedKey + " | " + unanalizedKey )
+                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients != [] {
+                    Text( unflaggedKey + " | " + unanalizedKey )
+                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients == [] && unaddedIngredients != [] {
                     Text(unanalizedKey)
-                } else if flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
+                } else if userFlaggedIngredient == [] && flaggedIngredients == [] && unflaggedIngredients != [] && unaddedIngredients == [] {
                     Text(unflaggedKey)
-                } else if flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
+                } else if userFlaggedIngredient == [] && flaggedIngredients != [] && unflaggedIngredients == [] && unaddedIngredients == [] {
                     Text(flaggedKey)
                 }
             }.font(.footnote)

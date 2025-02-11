@@ -17,7 +17,4 @@ struct Ingredient: Hashable, Codable, Identifiable {
     var isFlagged: Bool
     var sourceUrl: String
     var pubChemUrl: String
-
-
-    
 }

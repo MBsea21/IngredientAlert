@@ -56,6 +56,6 @@ struct CommonIngredientNameList: View {
 
 #Preview {
     let modelData = ModelData()
-    IngredientList()
+    IngredientList(ingredients:modelData.ingredientListViewModel.ingredientRepository.ingredients)
         .environmentObject(modelData)
 }

@@ -48,7 +48,7 @@ struct ProductList: View {
 
 #Preview {
     let modelData = ModelData()
-    let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict: modelData.ingredientListViewModel.ingredientRepository.ingredientsDict)
+    let productsList = convertBEProductsListToFE(BEProducts: modelData.productListViewModel.productRepository.productsBE, ingredientDict: modelData.ingredientListViewModel.ingredientRepository.ingredientsDict, userFlaggedDict: modelData.authViewModel.currentUserFlaggedDict)
     ProductList(productsList: productsList)
         .environmentObject(ModelData())
 }
