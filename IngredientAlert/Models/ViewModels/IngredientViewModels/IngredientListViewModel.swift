@@ -14,17 +14,15 @@ protocol IngredientAuthenticationFormProtocol {
 
 class IngredientListViewModel: ObservableObject {
     @Published var ingredientViewModels: [IngredientViewModel] = []
+    @Published var ingredientRepository = IngredientRepository ()
     private var cancellables: Set<AnyCancellable> = []
     
-    @Published var ingredientRepository = IngredientRepository()
-    
     init () {
-        ingredientRepository.$ingredients.map { ingredients in
-            ingredients.map(IngredientViewModel.init)
+        ingredientRepository.$ingredients
+            .sink { ingredients in
+                self.ingredientViewModels = ingredients.map { IngredientViewModel(ingredient:$0, ingredientRepository: self.ingredientRepository) }
         }
-        .assign(to:\.ingredientViewModels, on: self)
         .store(in: &cancellables)
-
     }
     func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) async throws {
         try await ingredientRepository.addCommon(inputName: inputName,
@@ -42,9 +40,6 @@ class IngredientListViewModel: ObservableObject {
                                        isFlagged: isFlagged,
                                        sourceUrl: sourceUrl,
                                        pubChemUrl: pubChemUrl)
-    }
-    func addProductIngredient(inputName:String) -> String{
-        return ingredientRepository.addIngredientFromProductForm(inputName: inputName)
     }
 }
 

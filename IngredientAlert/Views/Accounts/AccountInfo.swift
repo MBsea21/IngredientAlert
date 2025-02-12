@@ -80,6 +80,7 @@ struct AccountInfo: View {
                                     SettingsRowView(imageName:"arrow.left.circle.fill",
                                                 title:"Sign Out",
                                                 tintColor: Color(.red))
+                                    .foregroundColor (.white)
                                 }
                                 Spacer()
                             

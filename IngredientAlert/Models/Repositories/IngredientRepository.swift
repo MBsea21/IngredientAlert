@@ -38,8 +38,11 @@ class IngredientRepository: ObservableObject {
                     try? document.data(as: Ingredient.self)
                 } ?? []
                 
+                
                 NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
-                self.setIngredientDict()
+                DispatchQueue.main.async {
+                    self.setIngredientDict()
+                }
             }
     }
     func addCommon(inputName: String, commonName: String, isCommonName: Bool, isFlagged: Bool, sourceUrl: String, pubChemUrl: String) async throws {
@@ -56,6 +59,8 @@ class IngredientRepository: ObservableObject {
                                                  pubChemUrl: pubChemUrl)
             do {
                 try store.collection(path).document(newCommonIngredientId).setData(from: newCommonIngredient)
+                self.ingredients.append(newCommonIngredient)
+                self.setIngredientDict()
             }
             
         } catch {
@@ -76,32 +81,12 @@ class IngredientRepository: ObservableObject {
                                                     pubChemUrl: pubChemUrl)
             do {
                 try store.collection(path).document(newOtherNameIngredientId).setData(from:newOtherNameIngredient)
+                self.ingredients.append(newOtherNameIngredient)
+                self.setIngredientDict()
             } catch {
                 fatalError("DEBUG: unable to add other ingredient name \(inputName): \(error.localizedDescription)")
             }
         }
-    }
-    func addIngredientFromProductForm(inputName: String) -> String{
-        do {
-            let newProductIngredientReference = store.collection(path).document()
-            let newProductIngredientId = newProductIngredientReference.documentID
-            let newProductIngredient = Ingredient(id:newProductIngredientId,
-                                                  inputName: inputName.lowercased(),
-                                                  commonName: inputName.lowercased(),
-                                                  isCommonName: true,
-                                                  commonNameId: newProductIngredientId,
-                                                  isFlagged: false,
-                                                  sourceUrl: "",
-                                                  pubChemUrl: ""
-            )
-            do {
-                try store.collection(path).document(newProductIngredientId).setData(from:newProductIngredient)
-                return newProductIngredientId
-            } catch {
-                fatalError("DEBUG: unable to add product ingredient \(newProductIngredientId) to ingredient list: \(error.localizedDescription)")
-            }
-        }
-        
     }
     
     func update(_ ingredient: Ingredient) {
@@ -115,11 +100,11 @@ class IngredientRepository: ObservableObject {
     
     func remove(_ ingredient: Ingredient) {
         guard let ingredientId = ingredient.id else { return }
-        store.collection(path).document(ingredientId).delete { error in
-            if let error = error {
-                print("DEBUG: unable to remove ingredient \(error.localizedDescription)")
+            store.collection(path).document(ingredientId).delete { error in
+                if error != nil {
+                    print("Debug unable to delete ingredient")
+                }
             }
-        }
     }
     func batchIngredientAdd( nameList: [String], commonName: String, commonNameId: String, sourceUrl: String, pubChemUrl: String, isFlagged: Bool) async throws{
         let batch = store.batch()

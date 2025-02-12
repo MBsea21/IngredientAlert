@@ -53,9 +53,10 @@ class ModelData: ObservableObject {
     }
 
     deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.userDataLoaded"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.ingredientsLoaded"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("ingredientAlert.userDataLoaded"), object: nil)
+
     }
 }
 

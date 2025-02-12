@@ -8,15 +8,17 @@ import Foundation
 import Combine
 
 class IngredientViewModel: ObservableObject, Identifiable {
-    private let ingredientRepository = IngredientRepository()
+    private var ingredientRepository: IngredientRepository
     @Published var ingredient: Ingredient
     
     private var cancellables: Set<AnyCancellable> = []
     
     var id = ""
     
-    init(ingredient: Ingredient) {
+    init(ingredient: Ingredient, ingredientRepository: IngredientRepository) {
         self.ingredient = ingredient
+        self.ingredientRepository = ingredientRepository
+        
         $ingredient
             .compactMap { $0.id }
             .assign(to: \.id, on: self)

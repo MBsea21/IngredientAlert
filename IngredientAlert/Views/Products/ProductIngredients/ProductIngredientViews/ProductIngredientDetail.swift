@@ -69,14 +69,7 @@ struct ProductIngredientDetail: View {
                     }.padding()
                     
                 }
-//                if ingredient.otherNames != "" {
-//                    Text("Other Names")
-//                        .font(.headline)
-//                        .padding(.top)
-//                    Text(ingredient.otherNames)
-//                        .padding(.bottom)
-//                }
-                
+//               
             }
             
         }

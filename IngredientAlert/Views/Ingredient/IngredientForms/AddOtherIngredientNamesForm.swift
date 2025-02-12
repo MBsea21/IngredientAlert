@@ -11,7 +11,6 @@ import FirebaseFirestore
 struct AddOtherIngredientNamesForm: View {
     @EnvironmentObject var modelData: ModelData
     var ingredient: Ingredient
-    @State private var multipleNamesIsOn: Bool = false
     @State private var inputNames: String = ""
     @State private var commonNameId: String = ""
     @State private var isLoading: Bool = false
@@ -19,8 +18,6 @@ struct AddOtherIngredientNamesForm: View {
     
     var body: some View{
         Text(ingredient.commonName)
-        Toggle("Add Multiple Names", isOn: $multipleNamesIsOn)
-        if multipleNamesIsOn {
             VStack{
                 InputView(text: $inputNames,
                           title:"inputNames",
@@ -51,7 +48,7 @@ struct AddOtherIngredientNamesForm: View {
                     
                     
                 }
-            }
+            
             
         }
         
@@ -64,9 +61,7 @@ struct AddOtherIngredientNamesForm: View {
         let sourceUrl = ingredient.sourceUrl
         let pubChemUrl = ingredient.pubChemUrl
         isLoading = true
-        if multipleNamesIsOn {
-            let nameList : [String] = inputNames.components(separatedBy: "*")
-            
+        let nameList : [String] = inputNames.components(separatedBy: "*")
             do {
                 try await modelData.ingredientListViewModel.ingredientRepository.batchIngredientAdd(nameList: nameList,
                                                                                                     commonName: commonName,
@@ -85,4 +80,4 @@ struct AddOtherIngredientNamesForm: View {
     }
     
     
-}
+

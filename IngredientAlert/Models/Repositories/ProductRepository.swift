@@ -15,6 +15,8 @@ class ProductRepository: ObservableObject {
     
     @Published var productsBE: [ProductBE] = []
     @Published var productsFE: [ProductFE] = []
+    @Published var productsDict: [String: ProductFE] = [:]
+    
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -22,6 +24,11 @@ class ProductRepository: ObservableObject {
         self.get()
     }
     
+    private func setProductDict() {
+        for product in productsFE {
+            productsDict[product.name] = product
+        }
+    }
     func get() {
         store.collection(path)
             .addSnapshotListener { querySnapshot, error in
@@ -34,6 +41,9 @@ class ProductRepository: ObservableObject {
                 } ?? []
                 
                 NotificationCenter.default.post(name: NSNotification.Name("ingredientAlert.productsLoaded"), object: nil)
+                DispatchQueue.main.async {
+                    self.setProductDict()
+                }
             }
     }
     func addProduct(name: String, brand: String, use:String, useArea: String, uploaderId: String, inputProductIngredients: [String])  async throws{
@@ -67,7 +77,7 @@ class ProductRepository: ObservableObject {
         }
     }
     
-    func remove(_ product: ProductBE) {
+    func remove(_ product: ProductFE) {
         guard let productId = product.id else { return }
         store.collection(path).document(productId).delete { error in
             if let error = error {

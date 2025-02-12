@@ -36,9 +36,7 @@ struct ContentView: View {
                 
             Text("Loading Data......")
         }
-//        else {
-//            Text("Loading...")
-//        }
+
         
     }
 }
